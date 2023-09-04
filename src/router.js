@@ -7,7 +7,7 @@ import Result from "@/components/Result.vue";
 
 const routes = [
     { path: "/", component: App },
-    { path: "/:query", component: Result }
+    { path: "/search/:query", component: Result }
 ]
 
 export default createRouter({

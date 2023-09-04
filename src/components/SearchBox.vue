@@ -2,7 +2,7 @@
     import router from "@/router";
     function search(e) {
         if (e.code === "Enter") {
-            router.push(`/${e.target.value}`)
+            router.push(`/search/${e.target.value}`)
         }
     }
 </script>
