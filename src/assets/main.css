@@ -1,0 +1,15 @@
+@font-face {
+    font-family: Vazir;
+    src: url("vazir.ttf");
+}
+
+html, body {
+    height: 100vh;
+}
+
+* {
+    font-family: Vazir;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+}
