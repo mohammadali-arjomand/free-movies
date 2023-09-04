@@ -7,10 +7,6 @@ const query = useRoute().params.query;
 let found = ref(false);
 let posters = reactive([]);
 
-const headers = {
-    "x-cors-api-key": "temp_aa3c5ec12fc4d264fe5d68720b3cf0ef"
-}
-
 fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${query}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
     .then(response => {
         if (response.ok) return response.json()
@@ -18,6 +14,7 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedri
     })
     .then(data => {
             posters = JSON.parse(data.contents).posters;
+            console.log(posters)
             found.value = true;
         }
     );
@@ -30,7 +27,7 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedri
         <p v-if="posters.length === 0" class="msg">
             همچین عنوانی پیدا نشد!
             <br>
-            <small>اگه فارسی جستجو کردی انگلیسی جستجو کن</small>
+            <small>اگه فارسی جستجو کردی، انگلیسی رو هم امتحان کن</small>
         </p>
     </div>
     <p v-else class="msg">در حال جستجو ...</p>
