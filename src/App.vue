@@ -7,7 +7,7 @@
         <h1>فری مووی</h1>
         <h2>موتورجستجوی فیلم و سریال</h2>
         <div class="spacer"></div>
-        <search-box></search-box>
+        <search-box text=""></search-box>
     </section>
 </template>
 
