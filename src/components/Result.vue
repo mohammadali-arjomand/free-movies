@@ -32,8 +32,6 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedri
         <div v-if="found">
             <p v-if="movies.length === 0" class="msg">
                 همچین عنوانی پیدا نشد!
-                <br>
-                <router-link to="/">جستجو مجدد</router-link>
             </p>
             <v-container v-else>
                 <v-row>

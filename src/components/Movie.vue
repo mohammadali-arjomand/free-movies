@@ -13,14 +13,28 @@ import {
     VList,
     VListItem,
     VListSubheader,
+    VAppBar,
+    VAppBarTitle,
+    VAppBarNavIcon,
     VIcon
 } from "vuetify/components";
-    import AppBar from "@/components/AppBar.vue";
 import {ref} from "vue";
 import LoadingList from "@/components/LoadingList.vue";
+import router from "@/router";
 
     const downloadDlg = ref(false)
+    const watchDlg = ref(false)
+    const watchUrl = ref("")
     const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
+
+    function downloadBtn(url) {
+        location.assign(url)
+    }
+
+    function watchBtn(url) {
+        watchUrl.value = url
+        watchDlg.value = true
+    }
 
     const loaded = ref(true)
     const seasons = ref([]);
@@ -54,6 +68,9 @@ import LoadingList from "@/components/LoadingList.vue";
 
 <template>
     <v-app>
+        <v-dialog v-model="watchDlg">
+            <video :src="watchUrl" :poster="movie.cover" controls class="rounded"></video>
+        </v-dialog>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="blue-darken-2">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
@@ -64,7 +81,13 @@ import LoadingList from "@/components/LoadingList.vue";
                         <h2 class="px-3">{{ season.title }}</h2>
                         <div v-for="episode of season.episodes">
                             <v-list-subheader>{{ episode.title }}</v-list-subheader>
-                            <a v-for="source of episode.sources" :href="source.url"><v-list-item>{{ source.quality === null || source.quality === "" ? "دانلود" : source.quality }}</v-list-item></a>
+                            <v-list-item v-for="source of episode.sources">
+                                <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
+                                <div class="float-left">
+                                    <v-btn color="blue-darken-2" @click="downloadBtn(source.url)" class="ml-1"><v-icon>mdi-download</v-icon></v-btn>
+                                    <v-btn color="blue-darken-2" @click="watchBtn(source.url)"><v-icon>mdi-eye</v-icon></v-btn>
+                                </div>
+                            </v-list-item>
                         </div>
                 </v-list>
             </div>
@@ -72,7 +95,11 @@ import LoadingList from "@/components/LoadingList.vue";
                 <loading-list v-for="n in 10"></loading-list>
             </div>
         </v-dialog>
-        <app-bar></app-bar>
+        <v-app-bar :elevation="2" color="blue-darken-2">
+            <v-app-bar-nav-icon @click="router.back()"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>
+            <v-app-bar-title v-if="movie.type === 'movie'">فیلم</v-app-bar-title>
+            <v-app-bar-title v-else>سریال</v-app-bar-title>
+        </v-app-bar>
         <br><br>
         <v-container>
             <p v-if="movie === null" class="msg">
@@ -119,6 +146,7 @@ import LoadingList from "@/components/LoadingList.vue";
         align-items: center;
     }
     pre {
+        overflow: hidden;
         font-family: Vazir;
         text-align: justify;
         overflow-x: auto;

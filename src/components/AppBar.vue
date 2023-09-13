@@ -24,7 +24,7 @@
     <v-navigation-drawer v-model="drawer" location="right">
         <div class="bg-blue-darken-2 w-100 h-25 d-flex justify-end align-start pa-2 flex-column">
             <p>فری مووی</p>
-            <small>موتورجستجوی فیلم و سریال</small>
+            <small>دانلود و تماشای فیلم و سریال</small>
         </div>
         <v-list>
             <router-link to="/" style="color: #222; text-decoration: none"><v-list-item prepend-icon="mdi-home">صفحه اصلی</v-list-item></router-link>
