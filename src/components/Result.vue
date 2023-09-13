@@ -1,12 +1,12 @@
 <script setup>
 import {reactive, ref} from "vue";
 import {useRoute} from "vue-router";
-import SearchBox from "@/components/SearchBox.vue";
+import {VApp, VContainer, VRow, VCol} from "vuetify/components";
+import SearchBar from "@/components/SearchBar.vue";
 import MovieCard from "@/components/MovieCard.vue";
+import LoadingCard from "@/components/LoadingCard.vue";
 
 const query = useRoute().params.query;
-document.title = `${query} - فری مووی`
-
 
 let found = ref(false);
 let movies = reactive([]);
@@ -26,29 +26,34 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedri
 
 <template>
 
-    <div v-if="found">
-        <p v-if="movies.length === 0" class="msg">
-            همچین عنوانی پیدا نشد!
-            <br>
-            <router-link to="/">جستجو مجدد</router-link>
-        </p>
-        <div v-else class="container">
-            <h1>فری مووی</h1>
-
-            <search-box :text="query" :refresh="true"></search-box>
-            <movie-card v-for="movie of movies"
-                        :title="movie.title"
-                        :image="movie.image"
-                        :imdb="movie.imdb"
-                        :year="movie.year"
-                        :countries="movie.country"
-                        :sources="movie.sources"
-                        :type="movie.type"
-            ></movie-card>
-            <br>
+    <v-app>
+        <search-bar :value="query" :refresh="true"></search-bar>
+        <br><br>
+        <div v-if="found">
+            <p v-if="movies.length === 0" class="msg">
+                همچین عنوانی پیدا نشد!
+                <br>
+                <router-link to="/">جستجو مجدد</router-link>
+            </p>
+            <v-container v-else>
+                <v-row>
+                    <v-col cols="6" sm="4" md="3" lg="2" v-for="movie of movies">
+                        <movie-card :movie="movie"></movie-card>
+                    </v-col>
+                </v-row>
+                <br>
+            </v-container>
         </div>
-    </div>
-    <p v-else class="msg">در حال جستجو ...</p>
+        <div v-else>
+            <v-container>
+                <v-row>
+                    <v-col cols="6" sm="4" md="3" lg="2" v-for="n in 24">
+                        <loading-card></loading-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </div>
+    </v-app>
 
 </template>
 

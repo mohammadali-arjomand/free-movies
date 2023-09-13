@@ -1,32 +1,18 @@
 <script setup>
-    import SearchBox from "@/components/SearchBox.vue";
+    import {VApp} from "vuetify/components";
+    import AppBar from "@/components/AppBar.vue";
+    import {VContainer} from "vuetify/components";
 </script>
 
 <template>
-    <section>
-        <h1>فری مووی</h1>
-        <h2>موتورجستجوی فیلم و سریال</h2>
-        <div class="spacer"></div>
-        <search-box text=""></search-box>
-    </section>
+    <v-app>
+        <app-bar></app-bar>
+        <v-container class="d-flex justify-center align-center h-screen flex-column">
+            <p>ویترین به زودی اضافه میشود ...</p>
+        </v-container>
+    </v-app>
 </template>
 
 <style scoped>
-    section {
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    section h1 {
-        font-size: 3.2rem;
-    }
-    section h2 {
-        font-size: 1.5rem;
-    }
-    .spacer {
-        padding: 25px;
-    }
+
 </style>

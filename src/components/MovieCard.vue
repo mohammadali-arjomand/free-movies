@@ -1,64 +1,22 @@
 <script setup>
-    import TheButton from "@/components/TheButton.vue";
+import {VCard, VImg, VCardItem, VCardTitle} from "vuetify/components";
+import router from "@/router";
 
-    const props = defineProps(["title", "image", "imdb", "year", "countries", "sources", "type"])
+const props = defineProps(["movie"])
+
+function openMovie(movie) {
+    localStorage.movie = JSON.stringify(movie);
+    router.push("/movie");
+}
 </script>
 
 <template>
-    <section>
-        <img :src="image" :alt="title">
-        <div>
-            <h2>{{ title }}</h2>
-            <p>امتیاز: {{ imdb }}</p>
-            <p>سال ساخت: {{ year }}</p>
-            <p>
-                کشور سازنده:
-                <span v-for="country in countries">{{ country.title }}</span>
-            </p>
-            <p>{{ type === "movie" ? "فیلم" : "سریال" }}</p>
-            <div v-if="sources.length > 0" class="buttons">
-                <the-button v-for="source of sources"
-                            :url="source.url"
-                >{{ source.quality === '' ? "دانلود" : source.quality }}</the-button>
-            </div>
-            <p v-else class="blue">به زودی ...</p>
-        </div>
-    </section>
+    <v-card class="mt-3 h-100" @click="openMovie(movie)" dir="ltr">
+        <v-img :src="movie.image" class="d-block"></v-img>
+        <v-card-item>
+            <v-card-title width="50">{{ movie.title }}</v-card-title>
+        </v-card-item>
+    </v-card>
 </template>
 
-<style scoped>
-    section {
-        box-shadow: #ddd 0 0 4px 1px;
-        margin-top: 20px;
-        width: 80vw;
-        padding: 12px;
-        display: flex;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    section img {
-        height: 30vh;
-        border-radius: 10px;
-    }
-
-    section div {
-        display: flex;
-        flex-direction: column;
-        margin: 20px 10px;
-    }
-
-    section div h2 {
-        margin-bottom: 20px;
-    }
-
-    .buttons {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .blue {
-        color: royalblue;
-    }
-</style>
+<style scoped></style>

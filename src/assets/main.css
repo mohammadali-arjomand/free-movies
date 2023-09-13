@@ -14,3 +14,11 @@ html, body {
     padding: 0;
     direction: rtl;
 }
+
+.text-h1, .text-h2 {
+    font-family: Vazir !important;
+}
+
+.v-list-item__prepend {
+    width: 32px;
+}

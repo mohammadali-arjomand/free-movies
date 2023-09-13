@@ -1,0 +1,139 @@
+<script setup>
+import {
+    VApp,
+    VContainer,
+    VToolbar,
+    VImg,
+    VRow,
+    VCol,
+    VBtn,
+    VCard,
+    VDialog,
+    VToolbarTitle,
+    VList,
+    VListItem,
+    VListSubheader,
+    VIcon
+} from "vuetify/components";
+    import AppBar from "@/components/AppBar.vue";
+import {ref} from "vue";
+import LoadingList from "@/components/LoadingList.vue";
+
+    const downloadDlg = ref(false)
+    const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
+
+    const loaded = ref(true)
+    const seasons = ref([]);
+    if (movie.type === "movie") {
+        seasons.value = [
+            {
+                title: movie.title,
+                episodes: [
+                    {
+                        title: "دانلود",
+                        sources: movie.sources
+                    }
+                ]
+            }
+        ]
+    }
+    else {
+        loaded.value = false
+        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`http://winbedrives.com/api/season/by/serie/${movie.id}/4F5A9C3D9A86FA54EACEDDD63518`)}`)
+            .then(response => {
+                if (response.ok) return response.json()
+                throw new Error('Network response was not ok.')
+            })
+            .then(data => {
+                    seasons.value = JSON.parse(data.contents)
+                    loaded.value = true
+                }
+            );
+    }
+</script>
+
+<template>
+    <v-app>
+        <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
+            <v-toolbar color="blue-darken-2">
+                <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
+                <v-toolbar-title>دانلود</v-toolbar-title>
+            </v-toolbar>
+            <div v-if="loaded" class="download-box overflow-x-auto">
+                <v-list v-for="season of seasons">
+                        <h2 class="px-3">{{ season.title }}</h2>
+                        <div v-for="episode of season.episodes">
+                            <v-list-subheader>{{ episode.title }}</v-list-subheader>
+                            <a v-for="source of episode.sources" :href="source.url"><v-list-item>{{ source.quality === null || source.quality === "" ? "دانلود" : source.quality }}</v-list-item></a>
+                        </div>
+                </v-list>
+            </div>
+            <div v-else class="download-box overflow-x-auto">
+                <loading-list v-for="n in 10"></loading-list>
+            </div>
+        </v-dialog>
+        <app-bar></app-bar>
+        <br><br>
+        <v-container>
+            <p v-if="movie === null" class="msg">
+                ویدیوی موردنظر شما پیدا نشد
+            </p>
+            <div v-else class="mt-3">
+                <v-row>
+                    <v-col cols="5" md="3" lg="2">
+                        <v-img :src="movie.image" class="rounded"></v-img>
+                    </v-col>
+                    <v-col cols="7" md="9" lg="10">
+                        <h1>{{ movie.title }}</h1>
+                        <table>
+                            <tr>
+                                <td>سال ساخت:</td>
+                                <td>{{ movie.year }}</td>
+                            </tr>
+                            <tr>
+                                <td>کشور سازنده:</td>
+                                <td>{{ movie.country[0].title }}</td>
+                            </tr>
+                            <tr>
+                                <td>امتیاز IMDb:</td>
+                                <td>{{ movie.imdb }}</td>
+                            </tr>
+                        </table>
+                        <v-btn color="blue-darken-2" @click="downloadDlg = true">
+                            <v-icon>mdi-download</v-icon>
+                            <span>دانلود</span>
+                        </v-btn>
+                    </v-col>
+                </v-row>
+                <v-card class="mt-3 pa-3"><pre>{{ movie.description }}</pre></v-card>
+            </div>
+        </v-container>
+    </v-app>
+</template>
+
+<style scoped>
+    .msg {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    pre {
+        font-family: Vazir;
+        text-align: justify;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+    }
+    a {
+        color: #222222;
+        text-decoration: none;
+    }
+    .download-box {
+        height: 100%;
+        background-color: white;
+    }
+</style>
