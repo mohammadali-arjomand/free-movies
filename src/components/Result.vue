@@ -28,12 +28,11 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedri
 
     <v-app>
         <search-bar :value="query" :refresh="true"></search-bar>
-        <br><br>
         <div v-if="found">
             <p v-if="movies.length === 0" class="msg">
                 همچین عنوانی پیدا نشد!
             </p>
-            <v-container v-else>
+            <v-container v-else class="mt-14">
                 <v-row>
                     <v-col cols="6" sm="4" md="3" lg="2" v-for="movie of movies">
                         <movie-card :movie="movie"></movie-card>
@@ -43,7 +42,7 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedri
             </v-container>
         </div>
         <div v-else>
-            <v-container>
+            <v-container class="mt-14">
                 <v-row>
                     <v-col cols="6" sm="4" md="3" lg="2" v-for="n in 24">
                         <loading-card></loading-card>

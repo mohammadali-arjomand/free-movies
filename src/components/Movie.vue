@@ -19,6 +19,7 @@ import {
     VIcon
 } from "vuetify/components";
 import {ref} from "vue";
+import {VideoPlayer} from "@videojs-player/vue";
 import LoadingList from "@/components/LoadingList.vue";
 import router from "@/router";
 
@@ -26,10 +27,6 @@ import router from "@/router";
     const watchDlg = ref(false)
     const watchUrl = ref("")
     const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
-
-    function downloadBtn(url) {
-        location.assign(url)
-    }
 
     function watchBtn(url) {
         watchUrl.value = url
@@ -69,7 +66,9 @@ import router from "@/router";
 <template>
     <v-app>
         <v-dialog v-model="watchDlg">
-            <video :src="watchUrl" :poster="movie.cover" controls class="rounded"></video>
+            <div dir="ltr" class="text-center">
+                <video-player :src="watchUrl" :poster="movie.cover" type="video/x-matroska" controls autoplay></video-player>
+            </div>
         </v-dialog>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="blue-darken-2">
@@ -84,7 +83,7 @@ import router from "@/router";
                             <v-list-item v-for="source of episode.sources">
                                 <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
                                 <div class="float-left">
-                                    <v-btn color="blue-darken-2" @click="downloadBtn(source.url)" class="ml-1"><v-icon>mdi-download</v-icon></v-btn>
+                                    <a :href="source.url"><v-btn color="blue-darken-2" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
                                     <v-btn color="blue-darken-2" @click="watchBtn(source.url)"><v-icon>mdi-eye</v-icon></v-btn>
                                 </div>
                             </v-list-item>
@@ -100,8 +99,7 @@ import router from "@/router";
             <v-app-bar-title v-if="movie.type === 'movie'">فیلم</v-app-bar-title>
             <v-app-bar-title v-else>سریال</v-app-bar-title>
         </v-app-bar>
-        <br><br>
-        <v-container>
+        <v-container class="mt-14">
             <p v-if="movie === null" class="msg">
                 ویدیوی موردنظر شما پیدا نشد
             </p>
