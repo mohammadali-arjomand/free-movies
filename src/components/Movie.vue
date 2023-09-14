@@ -83,7 +83,7 @@ import router from "@/router";
                             <v-list-item v-for="source of episode.sources">
                                 <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
                                 <div class="float-left">
-                                    <a :href="source.url"><v-btn color="blue-darken-2" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
+                                    <a :href="source.url" target="_blank"><v-btn color="blue-darken-2" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
                                     <v-btn color="blue-darken-2" @click="watchBtn(source.url)"><v-icon>mdi-eye</v-icon></v-btn>
                                 </div>
                             </v-list-item>
