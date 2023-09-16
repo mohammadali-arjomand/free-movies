@@ -78,7 +78,7 @@ import router from "@/router";
                                 <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
                                 <div class="float-left">
                                     <a :href="source.url" target="_blank"><v-btn color="blue-darken-2" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
-                                    <v-btn color="blue-darken-2" @click="watchBtn(source.url)"><v-icon>mdi-eye</v-icon></v-btn>
+                                    <a :href="'vlc://' + source.url"><v-btn color="orange-darken-2"><v-icon>mdi-vlc</v-icon></v-btn></a>
                                 </div>
                             </v-list-item>
                         </div>
