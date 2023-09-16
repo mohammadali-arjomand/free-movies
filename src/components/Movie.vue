@@ -16,20 +16,20 @@ import {
     VAppBar,
     VAppBarTitle,
     VAppBarNavIcon,
-    VIcon
+    VIcon,
+    VSnackbar
 } from "vuetify/components";
 import {ref} from "vue";
 import LoadingList from "@/components/LoadingList.vue";
 import router from "@/router";
 
     const downloadDlg = ref(false)
-    const watchDlg = ref(false)
-    const watchUrl = ref("")
+    const copySuccessSnk = ref(false)
     const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
 
-    function watchBtn(url) {
-        watchUrl.value = url
-        watchDlg.value = true
+    function copyUrlBtn(url) {
+        navigator.clipboard.writeText(url)
+        copySuccessSnk.value = true
     }
 
     const loaded = ref(true)
@@ -64,7 +64,8 @@ import router from "@/router";
 
 <template>
     <v-app>
-        <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
+        <v-snackbar v-model="copySuccessSnk" :timeout="1000">لینک کپی شد!</v-snackbar>
+        <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition" persistent>
             <v-toolbar color="blue-darken-2">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title>دانلود</v-toolbar-title>
@@ -78,7 +79,8 @@ import router from "@/router";
                                 <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
                                 <div class="float-left">
                                     <a :href="source.url" target="_blank"><v-btn color="blue-darken-2" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
-                                    <a :href="'vlc://' + source.url"><v-btn color="orange-darken-2"><v-icon>mdi-vlc</v-icon></v-btn></a>
+                                    <a :href="'vlc://' + source.url"><v-btn color="orange-darken-2" class="ml-1"><v-icon>mdi-vlc</v-icon></v-btn></a>
+                                    <v-btn color="blue-grey" @click="copyUrlBtn(source.url)"><v-icon>mdi-content-copy</v-icon></v-btn>
                                 </div>
                             </v-list-item>
                         </div>
