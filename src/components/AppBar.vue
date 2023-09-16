@@ -1,6 +1,7 @@
 <script setup>
     import {VAppBar, VAppBarTitle, VIcon, VNavigationDrawer, VList, VListItem, VDialog, VToolbar, VToolbarTitle, VBtn} from "vuetify/components";
     import {ref} from "vue";
+    import router from "@/router";
 
     const drawer = ref(false)
     const dialogDev = ref(false)
@@ -27,14 +28,15 @@
             <small>دانلود و تماشای فیلم و سریال</small>
         </div>
         <v-list>
-            <router-link to="/" style="color: #222; text-decoration: none"><v-list-item prepend-icon="mdi-home">صفحه اصلی</v-list-item></router-link>
+            <v-list-item prepend-icon="mdi-home">صفحه اصلی</v-list-item>
+            <v-list-item prepend-icon="mdi-history" @click.stop="router.push('/history')">سابقه مشاهده</v-list-item>
             <v-list-item prepend-icon="mdi-xml" @click.stop="dialogDev = true">توسعه دهنده</v-list-item>
         </v-list>
     </v-navigation-drawer>
     <v-app-bar :elevation="2" color="blue-darken-2">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" variant="text"><v-icon>mdi-menu</v-icon></v-app-bar-nav-icon>
         <v-app-bar-title>فری مووی</v-app-bar-title>
-        <router-link to="/search" style="color: white"><v-app-bar-nav-icon><v-icon>mdi-magnify</v-icon></v-app-bar-nav-icon></router-link>
+        <v-app-bar-nav-icon @click.stop="router.push('/search')"><v-icon>mdi-magnify</v-icon></v-app-bar-nav-icon>
     </v-app-bar>
 </template>
 

@@ -26,6 +26,21 @@ import router from "@/router";
     const downloadDlg = ref(false)
     const copySuccessSnk = ref(false)
     const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
+    if (movie !== null) {
+        if (localStorage.history === undefined) {
+            localStorage.history = JSON.stringify([movie])
+        }
+        else {
+            let history = JSON.parse(localStorage.history)
+            for (let n in history) {
+                if (history[n].id === movie.id) {
+                    history.splice(n, 1)
+                }
+            }
+            history.push(movie)
+            localStorage.history = JSON.stringify(history)
+        }
+    }
 
     function copyUrlBtn(url) {
         navigator.clipboard.writeText(url)
