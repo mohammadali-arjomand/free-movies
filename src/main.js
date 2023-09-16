@@ -12,10 +12,6 @@ import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 import './assets/main.css'
 
-// VideoJs
-import VueVideoPlayer from '@videojs-player/vue'
-import 'video.js/dist/video-js.css'
-
 const vuetify = createVuetify({
     components,
     directives,

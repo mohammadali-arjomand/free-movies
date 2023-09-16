@@ -19,7 +19,6 @@ import {
     VIcon
 } from "vuetify/components";
 import {ref} from "vue";
-import {VideoPlayer} from "@videojs-player/vue";
 import LoadingList from "@/components/LoadingList.vue";
 import router from "@/router";
 
@@ -65,11 +64,6 @@ import router from "@/router";
 
 <template>
     <v-app>
-        <v-dialog v-model="watchDlg">
-            <div dir="ltr" class="text-center">
-                <video-player :src="watchUrl" :poster="movie.cover" type="video/x-matroska" controls autoplay></video-player>
-            </div>
-        </v-dialog>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="blue-darken-2">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
