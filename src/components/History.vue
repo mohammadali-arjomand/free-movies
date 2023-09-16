@@ -35,7 +35,7 @@ function clearHistory() {
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn text="بله" color="red" @click="clearHistory"></v-btn>
-                    <v-btn text="خیر" @click="isActive.value = false"></v-btn>
+                    <v-btn text="خیر" @click="clearConfirmDlg = false"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
