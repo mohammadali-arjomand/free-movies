@@ -20,5 +20,4 @@ const vuetify = createVuetify({
 createApp({})
     .use(router)
     .use(vuetify)
-    .use(VueVideoPlayer)
     .mount('#app')
