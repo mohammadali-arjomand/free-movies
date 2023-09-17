@@ -1,20 +1,28 @@
 <script setup>
-import {reactive, ref} from "vue";
+import {reactive, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import {VApp, VContainer, VRow, VCol} from "vuetify/components";
 import SearchBar from "@/components/SearchBar.vue";
 import MovieCard from "@/components/MovieCard.vue";
 import LoadingCard from "@/components/LoadingCard.vue";
+import router from "@/router";
 
 const query = useRoute().params.query;
 
 let found = ref(false);
 let movies = reactive([]);
 
+watch(found, () => {
+    if (found && movies.length === 1 && localStorage.settingsAutoEnter === "true") {
+        localStorage.movie = JSON.stringify(movies[0]);
+        router.push("/movie");
+    }
+})
+
 fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${query}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
     .then(response => {
         if (response.ok) return response.json()
-        throw new Error('Network response was not ok.')
+        window.location.reload()
     })
     .then(data => {
             movies = JSON.parse(data.contents).posters;
