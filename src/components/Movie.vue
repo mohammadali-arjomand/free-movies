@@ -47,8 +47,32 @@ import router from "@/router";
         copySuccessSnk.value = true
     }
 
+    const addBookmarkSnk = ref(false)
+    const rmBookmarkSnk = ref(false)
+    const checkBookmark = () => {
+        let isExists = false
+        JSON.parse(localStorage.bookmarks).forEach(() => isExists = true)
+        return isExists
+    }
+    const isBookmark = ref(localStorage.bookmarks === undefined || movie === null ? false : checkBookmark())
+    function bookmark() {
+        if (isBookmark.value) {
+            let bookmarks = JSON.parse(localStorage.bookmarks)
+            bookmarks = bookmarks.filter(value => value.id !== movie.id)
+            localStorage.bookmarks = JSON.stringify(bookmarks)
+            rmBookmarkSnk.value = true
+        }
+        else {
+            let bookmarks = localStorage.bookmarks === undefined ? [] : JSON.parse(localStorage.bookmarks)
+            bookmarks.push(movie)
+            localStorage.bookmarks = JSON.stringify(bookmarks)
+            addBookmarkSnk.value = true
+        }
+        isBookmark.value = !isBookmark.value
+    }
+
     const loaded = ref(true)
-    const seasons = ref([]);
+    const seasons = ref([])
     if (movie.type === "movie") {
         seasons.value = [
             {
@@ -80,6 +104,8 @@ import router from "@/router";
 <template>
     <v-app>
         <v-snackbar v-model="copySuccessSnk" :timeout="1000">لینک کپی شد!</v-snackbar>
+        <v-snackbar v-model="addBookmarkSnk" :timeout="1000">به لیست علاقه مندی ها اضافه شد!</v-snackbar>
+        <v-snackbar v-model="rmBookmarkSnk" :timeout="1000">از لیست علاقه مندی ها حذف شد!</v-snackbar>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition" persistent>
             <v-toolbar color="blue-darken-2">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
@@ -109,6 +135,10 @@ import router from "@/router";
             <v-app-bar-nav-icon @click="router.back()"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>
             <v-app-bar-title v-if="movie.type === 'movie'">فیلم</v-app-bar-title>
             <v-app-bar-title v-else>سریال</v-app-bar-title>
+            <v-app-bar-nav-icon @click="bookmark">
+                <v-icon v-if="!isBookmark">mdi-bookmark-outline</v-icon>
+                <v-icon v-else>mdi-bookmark</v-icon>
+            </v-app-bar-nav-icon>
         </v-app-bar>
         <v-container class="mt-14">
             <p v-if="movie === null" class="msg">

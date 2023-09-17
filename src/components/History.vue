@@ -41,7 +41,7 @@ function clearHistory() {
         </v-dialog>
         <v-app-bar color="blue-darken-2">
             <v-app-bar-nav-icon @click.stop="router.back()" variant="text"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>
-            <v-app-bar-title>سابقه</v-app-bar-title>
+            <v-app-bar-title>تاریخچه</v-app-bar-title>
             <v-app-bar-nav-icon v-if="history !== null" @click.stop="clearConfirmDlg = true"><v-icon>mdi-delete</v-icon></v-app-bar-nav-icon>
         </v-app-bar>
         <p class="msg" v-if="history === null">سابقه شما خالی است</p>
