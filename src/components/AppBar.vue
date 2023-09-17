@@ -5,6 +5,8 @@
 
     const drawer = ref(false)
     const dialogDev = ref(false)
+
+    const history = localStorage.settingsSaveHistory
 </script>
 
 <template>
@@ -30,7 +32,7 @@
         <v-list>
             <v-list-item prepend-icon="mdi-home-outline">خانه</v-list-item>
             <v-list-item prepend-icon="mdi-bookmark-outline" @click.stop="router.push('/bookmarks')">نشان ها</v-list-item>
-            <v-list-item prepend-icon="mdi-history" @click.stop="router.push('/history')">تاریخچه</v-list-item>
+            <v-list-item v-if="history !== 'false'" prepend-icon="mdi-history" @click.stop="router.push('/history')">تاریخچه</v-list-item>
             <v-list-item prepend-icon="mdi-cog-outline" @click.stop="router.push('/settings')">تنظیمات</v-list-item>
             <v-list-item prepend-icon="mdi-xml" @click.stop="dialogDev = true">سازنده</v-list-item>
         </v-list>

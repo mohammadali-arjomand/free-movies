@@ -26,7 +26,7 @@ import router from "@/router";
     const downloadDlg = ref(false)
     const copySuccessSnk = ref(false)
     const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
-    if (movie !== null) {
+    if (localStorage.settingsSaveHistory !== "false" && movie !== null) {
         if (localStorage.history === undefined) {
             localStorage.history = JSON.stringify([movie])
         }
