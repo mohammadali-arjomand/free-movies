@@ -51,7 +51,7 @@ import router from "@/router";
     const rmBookmarkSnk = ref(false)
     const checkBookmark = () => {
         let isExists = false
-        JSON.parse(localStorage.bookmarks).forEach(() => isExists = true)
+        JSON.parse(localStorage.bookmarks).forEach(i => isExists = i.id === movie.id)
         return isExists
     }
     const isBookmark = ref(localStorage.bookmarks === undefined || movie === null ? false : checkBookmark())
@@ -106,7 +106,7 @@ import router from "@/router";
         <v-snackbar v-model="copySuccessSnk" :timeout="1000">لینک کپی شد!</v-snackbar>
         <v-snackbar v-model="addBookmarkSnk" :timeout="1000">به لیست علاقه مندی ها اضافه شد!</v-snackbar>
         <v-snackbar v-model="rmBookmarkSnk" :timeout="1000">از لیست علاقه مندی ها حذف شد!</v-snackbar>
-        <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition" persistent>
+        <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="blue-darken-2">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title>دانلود</v-toolbar-title>
