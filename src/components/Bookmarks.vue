@@ -11,7 +11,7 @@ const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage
     <v-app>
         <v-app-bar color="blue-darken-2">
             <v-app-bar-nav-icon @click.stop="router.back()" variant="text"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>
-            <v-app-bar-title>علاقه مندی ها</v-app-bar-title>
+            <v-app-bar-title>نشان ها</v-app-bar-title>
         </v-app-bar>
         <p class="msg" v-if="bookmarks === null">لیست علاقه مندی های شما خالی است</p>
         <v-container v-else class="mt-14">
