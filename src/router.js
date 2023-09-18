@@ -2,17 +2,17 @@
 import {createRouter, createWebHistory} from "vue-router";
 
 // components
-import App from "@/App.vue";
-import Result from "@/components/Result.vue";
-import Search from "@/components/Search.vue";
-import NotFound from "@/components/NotFound.vue";
-import Movie from "@/components/Movie.vue";
-import History from "@/components/History.vue";
-import Settings from "@/components/Settings.vue";
-import Bookmarks from "@/components/Bookmarks.vue";
+import Home from "@/pages/Home.vue";
+import Result from "@/pages/Result.vue";
+import Search from "@/pages/Search.vue";
+import NotFound from "@/pages/NotFound.vue";
+import Movie from "@/pages/Movie.vue";
+import History from "@/pages/History.vue";
+import Settings from "@/pages/Settings.vue";
+import Bookmarks from "@/pages/Bookmarks.vue";
 
 const routes = [
-    { path: "/", component: App },
+    { path: "/", component: Home },
     { path: "/movie", component: Movie },
     { path: "/history", component: History },
     { path: "/bookmarks", component: Bookmarks },
