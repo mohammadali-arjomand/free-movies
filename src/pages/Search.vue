@@ -10,9 +10,7 @@
     <v-app>
         <search-bar :focus="true"></search-bar>
         <v-list class="mt-14 pt-4">
-            <v-list-item v-for="searchText in searchHistory" prepend-icon="mdi-history" @click="router.push(`/search/${encodeURIComponent(searchText)}`)">
-                <span>{{ searchText }}</span>
-            </v-list-item>
+            <v-list-item v-for="searchText in searchHistory" prepend-icon="mdi-history" @click="router.push(`/search/${encodeURIComponent(searchText)}`)">{{ searchText }}</v-list-item>
         </v-list>
     </v-app>
 </template>
