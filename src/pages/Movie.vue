@@ -23,6 +23,9 @@ import {ref} from "vue";
 import LoadingList from "@/components/LoadingList.vue";
 import router from "@/router";
 
+    const copyLink = ref(localStorage.settingsCopyLink === undefined ? false : eval(localStorage.settingsCopyLink))
+    const openWithVlc = ref(localStorage.settingsOpenWithVlc === undefined ? false : eval(localStorage.settingsOpenWithVlc))
+
     const downloadDlg = ref(false)
     const copySuccessSnk = ref(false)
     const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
@@ -123,10 +126,10 @@ import router from "@/router";
                             <v-list-subheader>{{ episode.title }}</v-list-subheader>
                             <v-list-item v-for="source of episode.sources">
                                 <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
-                                <div class="float-left">
-                                    <a :href="source.url" target="_blank"><v-btn color="button" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
-                                    <a :href="'vlc://' + source.url"><v-btn color="orange-darken-2" class="ml-1"><v-icon>mdi-vlc</v-icon></v-btn></a>
-                                    <v-btn color="button-light" @click="copyUrlBtn(source.url)"><v-icon>mdi-content-copy</v-icon></v-btn>
+                                <div class="float-left d-flex gap-4">
+                                    <a :href="source.url" target="_blank"><v-btn color="button"><v-icon>mdi-download</v-icon></v-btn></a>
+                                    <a v-if="openWithVlc" :href="'vlc://' + source.url"><v-btn color="orange-darken-2"><v-icon>mdi-vlc</v-icon></v-btn></a>
+                                    <v-btn v-if="copyLink" color="button-light" @click="copyUrlBtn(source.url)"><v-icon>mdi-content-copy</v-icon></v-btn>
                                 </div>
                             </v-list-item>
                         </div>
@@ -207,5 +210,8 @@ import router from "@/router";
     .download-box {
         height: 100%;
         background-color: white;
+    }
+    .gap-4 {
+        gap: 4px;
     }
 </style>

@@ -11,9 +11,11 @@ const themesName = {
     DarkMode: "تیره"
 }
 
+const theme = ref(localStorage.settingsTheme === undefined ? "Classic" : themesName[localStorage.settingsTheme])
 const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eval(localStorage.settingsAutoEnter))
 const saveHistory = ref(localStorage.settingsSaveHistory === undefined ? true : eval(localStorage.settingsSaveHistory))
-const theme = ref(localStorage.settingsTheme === undefined ? "Classic" : themesName[localStorage.settingsTheme])
+const copyLink = ref(localStorage.settingsCopyLink === undefined ? false : eval(localStorage.settingsCopyLink))
+const openWithVlc = ref(localStorage.settingsOpenWithVlc === undefined ? false : eval(localStorage.settingsOpenWithVlc))
 
 watch(autoEnter, () => {
     localStorage.settingsAutoEnter = autoEnter.value;
@@ -33,6 +35,14 @@ watch(theme, () => {
         }
     }
     localStorage.settingsTheme = themeManager.global.name.value = themeName
+})
+
+watch(copyLink, () => {
+    localStorage.settingsCopyLink = copyLink.value;
+})
+
+watch(openWithVlc, () => {
+    localStorage.settingsOpenWithVlc = openWithVlc.value;
 })
 
 function goToGithub() {
@@ -72,6 +82,25 @@ function goToGithub() {
                 </span>
                 <v-list-item-subtitle>
                     اگر غیرفعال شود، تاریخچه مشاهده های شما ذخیره نخواهد شد.
+                </v-list-item-subtitle>
+            </v-list-item>
+            <v-divider class="mb-4"/>
+            <v-list-item class="py-0">
+                <span>
+                    کپی لینک
+                    <v-switch v-model="copyLink" class="float-left ml-3" color="switch" />
+                </span>
+                <v-list-item-subtitle>
+                    اگر فعال شود، گزینه «کپی لینک» به صفحه دانلودها اضافه می شود.
+                </v-list-item-subtitle>
+            </v-list-item>
+            <v-list-item class="py-0">
+                <span>
+                    بازکردن با VLC
+                    <v-switch v-model="openWithVlc" class="float-left ml-3" color="switch" />
+                </span>
+                <v-list-item-subtitle>
+                    اگر فعال شود، گزینه «بازکردن با VLC» به صفحه دانلودها اضافه می شود.
                 </v-list-item-subtitle>
             </v-list-item>
             <v-divider/>
