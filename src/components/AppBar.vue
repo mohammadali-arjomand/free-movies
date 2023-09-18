@@ -24,7 +24,7 @@
     </v-navigation-drawer>
     <v-app-bar :elevation="2" color="blue-darken-2">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer" variant="text"><v-icon>mdi-menu</v-icon></v-app-bar-nav-icon>
-        <v-app-bar-title>فری مووی</v-app-bar-title>
+        <v-app-bar-title @dblclick="console.log('#نه_به_کپی_کاری')">فری مووی</v-app-bar-title>
         <v-app-bar-nav-icon @click.stop="router.push('/search')"><v-icon>mdi-magnify</v-icon></v-app-bar-nav-icon>
     </v-app-bar>
 </template>
