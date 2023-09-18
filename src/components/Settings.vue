@@ -1,5 +1,5 @@
 <script setup>
-import {VApp, VAppBar, VAppBarTitle, VAppBarNavIcon, VIcon, VListItemSubtitle, VList, VListItem, VSwitch} from "vuetify/components";
+import {VApp, VAppBar, VAppBarTitle, VAppBarNavIcon, VIcon, VListItemSubtitle, VList, VListItem, VSwitch, VDivider} from "vuetify/components";
 import router from "@/router";
 import {ref, watch} from "vue";
 import {useTheme} from "vuetify";
@@ -34,6 +34,10 @@ watch(theme, () => {
     }
     localStorage.settingsTheme = themeManager.global.name.value = themeName
 })
+
+function goToGithub() {
+    window.location.assign("https://github.com/mohammadali-arjomand")
+}
 </script>
 
 <template>
@@ -70,6 +74,14 @@ watch(theme, () => {
                     اگر غیرفعال شود، تاریخچه مشاهده های شما ذخیره نخواهد شد.
                 </v-list-item-subtitle>
             </v-list-item>
+            <v-divider/>
+            <p class="ltr text-center py-4">
+                <v-icon>mdi-xml</v-icon>
+                with
+                <v-icon>mdi-heart-outline</v-icon>
+                by
+                <span @click="goToGithub">MohammadAli Arjomand</span>
+            </p>
         </v-list>
     </v-app>
 </template>
