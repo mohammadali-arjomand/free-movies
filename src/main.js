@@ -12,9 +12,15 @@ import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 import './assets/main.css'
 
+// Working
+import themes from "@/themes";
 const vuetify = createVuetify({
     components,
     directives,
+    theme: {
+        defaultTheme: localStorage.settingsTheme === undefined ? "Classic" : localStorage.settingsTheme,
+        themes
+    }
 })
 
 createApp({})

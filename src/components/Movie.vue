@@ -103,25 +103,25 @@ import router from "@/router";
 
 <template>
     <v-app>
-        <v-snackbar v-model="copySuccessSnk" :timeout="1000">لینک کپی شد!</v-snackbar>
-        <v-snackbar v-model="addBookmarkSnk" :timeout="1000">به لیست «نشان ها» اضافه شد!</v-snackbar>
-        <v-snackbar v-model="rmBookmarkSnk" :timeout="1000">از لیست «نشان ها» حذف شد!</v-snackbar>
+        <v-snackbar v-model="copySuccessSnk" :timeout="1000" color="snack">لینک کپی شد!</v-snackbar>
+        <v-snackbar v-model="addBookmarkSnk" :timeout="1000" color="snack">به لیست «نشان ها» اضافه شد!</v-snackbar>
+        <v-snackbar v-model="rmBookmarkSnk" :timeout="1000" color="snack">از لیست «نشان ها» حذف شد!</v-snackbar>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="blue-darken-2">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title>دانلود</v-toolbar-title>
             </v-toolbar>
             <div v-if="loaded" class="download-box overflow-x-auto">
-                <v-list v-for="season of seasons">
+                <v-list v-for="season of seasons" class="h-100">
                         <h2 class="px-3">{{ season.title }}</h2>
                         <div v-for="episode of season.episodes">
                             <v-list-subheader>{{ episode.title }}</v-list-subheader>
                             <v-list-item v-for="source of episode.sources">
                                 <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
                                 <div class="float-left">
-                                    <a :href="source.url" target="_blank"><v-btn color="blue-darken-2" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
+                                    <a :href="source.url" target="_blank"><v-btn color="button" class="ml-1"><v-icon>mdi-download</v-icon></v-btn></a>
                                     <a :href="'vlc://' + source.url"><v-btn color="orange-darken-2" class="ml-1"><v-icon>mdi-vlc</v-icon></v-btn></a>
-                                    <v-btn color="blue-grey" @click="copyUrlBtn(source.url)"><v-icon>mdi-content-copy</v-icon></v-btn>
+                                    <v-btn color="button-light" @click="copyUrlBtn(source.url)"><v-icon>mdi-content-copy</v-icon></v-btn>
                                 </div>
                             </v-list-item>
                         </div>
@@ -165,7 +165,7 @@ import router from "@/router";
                                 <td>{{ movie.imdb }}</td>
                             </tr>
                         </table>
-                        <v-btn color="blue-darken-2" @click="downloadDlg = true">
+                        <v-btn color="button" @click="downloadDlg = true">
                             <v-icon>mdi-download</v-icon>
                             <span>دانلود</span>
                         </v-btn>
