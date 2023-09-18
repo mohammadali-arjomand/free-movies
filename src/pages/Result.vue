@@ -9,6 +9,11 @@ import router from "@/router";
 
 const query = useRoute().params.query;
 
+let searchHistory = localStorage.search === undefined ? [] : JSON.parse(localStorage.search)
+searchHistory = searchHistory.filter(value => value !== query)
+searchHistory.push(query)
+localStorage.search = JSON.stringify(searchHistory)
+
 let found = ref(false);
 let movies = reactive([]);
 
