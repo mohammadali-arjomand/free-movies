@@ -71,6 +71,8 @@ import router from "@/router";
         isBookmark.value = !isBookmark.value
     }
 
+    const showImage = ref(false)
+
     const loaded = ref(true)
     const seasons = ref([])
     if (movie.type === "movie") {
@@ -106,6 +108,9 @@ import router from "@/router";
         <v-snackbar v-model="copySuccessSnk" :timeout="1000" color="snack">لینک کپی شد!</v-snackbar>
         <v-snackbar v-model="addBookmarkSnk" :timeout="1000" color="snack">به لیست «نشان ها» اضافه شد!</v-snackbar>
         <v-snackbar v-model="rmBookmarkSnk" :timeout="1000" color="snack">از لیست «نشان ها» حذف شد!</v-snackbar>
+        <v-dialog v-model="showImage">
+            <VImg :src="movie.image" class="rounded" />
+        </v-dialog>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="blue-darken-2">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
@@ -147,7 +152,7 @@ import router from "@/router";
             <div v-else class="mt-3">
                 <v-row>
                     <v-col cols="5" md="3" lg="2">
-                        <v-img :src="movie.image" class="rounded"></v-img>
+                        <v-img :src="movie.image" @click="showImage = true" class="rounded"></v-img>
                     </v-col>
                     <v-col cols="7" md="9" lg="10">
                         <h1>{{ movie.title }}</h1>
