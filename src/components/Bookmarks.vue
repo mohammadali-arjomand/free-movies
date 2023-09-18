@@ -3,7 +3,7 @@ import {VApp, VAppBar, VAppBarTitle, VAppBarNavIcon, VContainer, VRow, VCol} fro
 import MovieCard from "@/components/MovieCard.vue";
 import router from "@/router";
 
-const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage.bookmarks).reverse() : null
+const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage.bookmarks).reverse() : []
 
 </script>
 
@@ -13,7 +13,7 @@ const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage
             <v-app-bar-nav-icon @click.stop="router.back()" variant="text"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>
             <v-app-bar-title>نشان ها</v-app-bar-title>
         </v-app-bar>
-        <p class="msg" v-if="bookmarks === null">لیست علاقه مندی های شما خالی است</p>
+        <p class="msg" v-if="bookmarks.length < 1">هیچ موردی نشان نشده است</p>
         <v-container v-else class="mt-14">
             <v-row>
                 <v-col cols="6" sm="4" md="3" lg="2" v-for="movie of bookmarks">
@@ -25,5 +25,12 @@ const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage
 </template>
 
 <style scoped>
-
+.msg {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 </style>
