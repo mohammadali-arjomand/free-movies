@@ -30,7 +30,7 @@ function clearHistory() {
         <v-dialog v-model="clearConfirmDlg">
             <v-card title="فری مووی">
                 <v-card-text>
-                    آیا میخواهید سابقه خود را پاک کنید؟
+                    آیا میخواهید تاریخچه را پاک کنید؟
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
