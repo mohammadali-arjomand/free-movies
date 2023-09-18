@@ -11,7 +11,7 @@ const themesName = {
     DarkMode: "تیره"
 }
 
-const theme = ref(localStorage.settingsTheme === undefined ? "Classic" : themesName[localStorage.settingsTheme])
+const theme = ref(localStorage.settingsTheme === undefined ? "کلاسیک" : themesName[localStorage.settingsTheme])
 const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eval(localStorage.settingsAutoEnter))
 const saveHistory = ref(localStorage.settingsSaveHistory === undefined ? true : eval(localStorage.settingsSaveHistory))
 const copyLink = ref(localStorage.settingsCopyLink === undefined ? false : eval(localStorage.settingsCopyLink))
