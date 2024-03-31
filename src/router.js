@@ -7,14 +7,12 @@ import Result from "@/pages/Result.vue";
 import Search from "@/pages/Search.vue";
 import NotFound from "@/pages/NotFound.vue";
 import Movie from "@/pages/Movie.vue";
-import History from "@/pages/History.vue";
 import Settings from "@/pages/Settings.vue";
 import Bookmarks from "@/pages/Bookmarks.vue";
 
 const routes = [
     { path: "/", component: Home },
     { path: "/movie", component: Movie },
-    { path: "/history", component: History },
     { path: "/bookmarks", component: Bookmarks },
     { path: "/settings", component: Settings },
     { path: "/search", component: Search },

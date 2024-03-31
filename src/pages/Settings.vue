@@ -16,50 +16,17 @@ import router from "@/router";
 import {ref, watch} from "vue";
 import {useTheme} from "vuetify";
 import {tr} from "vuetify/locale";
-const themeManager = useTheme()
+import AppBar from "@/components/AppBar.vue";
 
-const themesName = {
-    Classic: "کلاسیک",
-    Modern: "مدرن",
-    DarkMode: "تیره"
-}
-
-const theme = ref(localStorage.settingsTheme === undefined ? "کلاسیک" : themesName[localStorage.settingsTheme])
 const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eval(localStorage.settingsAutoEnter))
-const saveHistory = ref(localStorage.settingsSaveHistory === undefined ? true : eval(localStorage.settingsSaveHistory))
-const copyLink = ref(localStorage.settingsCopyLink === undefined ? false : eval(localStorage.settingsCopyLink))
-const openWithVlc = ref(localStorage.settingsOpenWithVlc === undefined ? false : eval(localStorage.settingsOpenWithVlc))
 
 const clearConfirmDlg = ref(false)
 const clearConfirmSnk = ref(false)
 const resetDataDlg = ref(false)
+const contact = ref(false)
 
 watch(autoEnter, () => {
     localStorage.settingsAutoEnter = autoEnter.value;
-})
-
-watch(saveHistory, () => {
-    localStorage.removeItem("history")
-    localStorage.settingsSaveHistory = saveHistory.value;
-})
-
-watch(theme, () => {
-    let themeName;
-    for (let t in themesName) {
-        if (themesName[t] === theme.value) {
-            themeName = t
-            break
-        }
-    }
-    localStorage.settingsTheme = themeManager.global.name.value = themeName
-})
-
-watch(copyLink, () => {
-    localStorage.settingsCopyLink = copyLink.value;
-})
-
-watch(openWithVlc, () => {
-    localStorage.settingsOpenWithVlc = openWithVlc.value;
 })
 
 function clearSearchHistory() {
@@ -73,10 +40,6 @@ function resetData() {
     localStorage.clear()
     window.location.assign("/")
 }
-
-function goToGithub() {
-    window.location.assign("https://github.com/mohammadali-arjomand")
-}
 </script>
 
 <template>
@@ -89,8 +52,22 @@ function goToGithub() {
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text="بله" color="red" @click="clearSearchHistory"></v-btn>
-                    <v-btn text="خیر" @click="clearConfirmDlg = false"></v-btn>
+                    <v-btn text="بله" class="letter" color="red" @click="clearSearchHistory"></v-btn>
+                    <v-btn text="خیر" class="letter" @click="clearConfirmDlg = false"></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="contact">
+            <v-card title="ارتباط با توسعه دهنده">
+                <v-card-text>
+                    <a href="mailto:arjomand.dev@gmail.com">
+                        <v-icon>mdi-email-plus</v-icon>
+                        ایمیل
+                    </a>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="بستن" class="letter" @click="contact = false"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -101,62 +78,26 @@ function goToGithub() {
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text="بله" color="red" @click="resetData"></v-btn>
-                    <v-btn text="خیر" @click="resetDataDlg = false"></v-btn>
+                    <v-btn text="بله" class="letter" color="red" @click="resetData"></v-btn>
+                    <v-btn text="خیر" class="letter" @click="resetDataDlg = false"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <v-app-bar color="blue-darken-2">
-            <v-app-bar-nav-icon @click="router.back()"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>
-            <v-app-bar-title>تنظیمات</v-app-bar-title>
-        </v-app-bar>
+        <app-bar></app-bar>
 
 
-        <v-list class="mt-14 pt-6" color="surface" lines="three">
-            <v-list-item class="py-0">
-                    قالب
-                    <v-select
-                            v-model="theme"
-                            :items="['کلاسیک', 'مدرن', 'تیره']"
-                    ></v-select>
-            </v-list-item>
+        <v-list class="mt-14 pt-6 h-100 bg-black" color="surface" lines="three">
+
             <v-list-item class="py-0">
                 <span>
                     ورود خودکار
-                    <v-switch v-model="autoEnter" class="float-left ml-3" color="switch" />
+                    <v-switch v-model="autoEnter" class="float-left ml-3" color="indigo-accent-2" />
                 </span>
                 <v-list-item-subtitle>
                     در صورتی که جستجو فقط یک نتیجه داشت، به صورت خودکار وارد آن شود.
                 </v-list-item-subtitle>
             </v-list-item>
-            <v-list-item class="py-0">
-                <span>
-                    تاریخچه
-                    <v-switch v-model="saveHistory" class="float-left ml-3" color="switch" />
-                </span>
-                <v-list-item-subtitle>
-                    اگر غیرفعال شود، تاریخچه مشاهده های شما ذخیره نخواهد شد.
-                </v-list-item-subtitle>
-            </v-list-item>
-            <v-divider class="mb-4" />
-            <v-list-item class="py-0">
-                <span>
-                    کپی لینک
-                    <v-switch v-model="copyLink" class="float-left ml-3" color="switch" />
-                </span>
-                <v-list-item-subtitle>
-                    اگر فعال شود، گزینه «کپی لینک» به صفحه دانلودها اضافه می شود.
-                </v-list-item-subtitle>
-            </v-list-item>
-            <v-list-item class="py-0">
-                <span>
-                    بازکردن با VLC
-                    <v-switch v-model="openWithVlc" class="float-left ml-3" color="switch" />
-                </span>
-                <v-list-item-subtitle>
-                    اگر فعال شود، گزینه «بازکردن با VLC» به صفحه دانلودها اضافه می شود.
-                </v-list-item-subtitle>
-            </v-list-item>
+
             <v-divider/>
             <v-list-item class="py-0" @click="clearConfirmDlg = true">
                 <span>پاکسازی تاریخچه جستجو</span>
@@ -171,17 +112,22 @@ function goToGithub() {
                 </v-list-item-subtitle>
             </v-list-item>
             <v-divider/>
-            <p class="ltr text-center py-4">
-                <v-icon>mdi-xml</v-icon>
-                with
-                <v-icon>mdi-heart-outline</v-icon>
-                by
-                <span @click="goToGithub">MohammadAli Arjomand</span>
-            </p>
+            <v-list-item class="py-0" @click="contact = true">
+                <span>ارتباط با توسعه دهنده</span>
+                <v-list-item-subtitle>
+                    برای پرسیدن سوالات و ارسال پیشنهادات میتوانید با توسعه دهنده این برنامه در ارتباط باشد. برای اینکار روی همین بخش ضربه بزنید.
+                </v-list-item-subtitle>
+            </v-list-item>
         </v-list>
     </v-app>
 </template>
 
 <style scoped>
-
+.letter {
+    letter-spacing: 0;
+}
+a {
+    color: #222222;
+    text-decoration: none;
+}
 </style>

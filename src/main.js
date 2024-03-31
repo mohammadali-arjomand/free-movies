@@ -18,8 +18,12 @@ const vuetify = createVuetify({
     components,
     directives,
     theme: {
-        defaultTheme: localStorage.settingsTheme === undefined ? "Classic" : localStorage.settingsTheme,
-        themes
+        defaultTheme: "dark",
+        themes: {
+            dark: {
+                background: "#000000"
+            }
+        }
     }
 })
 

@@ -1,41 +1,63 @@
 <script setup>
-    import {VAppBar, VAppBarTitle, VIcon, VNavigationDrawer, VList, VListItem} from "vuetify/components";
+    import {VAppBar, VIcon} from "vuetify/components";
     import {ref} from "vue";
     import router from "@/router";
 
-    const drawer = ref(false)
-    const dialogDev = ref(false)
+    const nav = ref(setNav())
 
-    const history = localStorage.settingsSaveHistory
+    function setNav() {
+        switch (router.currentRoute._value.fullPath) {
+            case "/": return 0
+            case "/search": return 1
+            case "/bookmarks": return 2
+            case "/settings": return 3
+        }
+    }
 </script>
 
 <template>
-    <v-navigation-drawer v-model="drawer" location="right">
-        <div class="bg-blue-darken-2 w-100 h-25 d-flex justify-end align-start pa-2 flex-column">
-            <p>فری مووی</p>
-            <small>دانلود و تماشای فیلم و سریال</small>
-        </div>
-        <v-list>
-            <v-list-item prepend-icon="mdi-home-outline">خانه</v-list-item>
-            <v-list-item prepend-icon="mdi-bookmark-outline" @click.stop="router.push('/bookmarks')">نشان ها</v-list-item>
-            <v-list-item v-if="history !== 'false'" prepend-icon="mdi-history" @click.stop="router.push('/history')">تاریخچه</v-list-item>
-            <v-list-item prepend-icon="mdi-cog-outline" @click.stop="router.push('/settings')">تنظیمات</v-list-item>
-            <a href="mailto:arjomand.dev@gmail.com"><v-list-item prepend-icon="mdi-face-agent" class="position-fixed bottom-0 w-100">پشتیبانی</v-list-item></a>
-        </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :elevation="2" color="blue-darken-2">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" variant="text"><v-icon>mdi-menu</v-icon></v-app-bar-nav-icon>
-        <v-app-bar-title @dblclick="console.log('#نه_به_کپی_کاری')">فری مووی</v-app-bar-title>
-        <v-app-bar-nav-icon @click.stop="router.push('/search')"><v-icon>mdi-magnify</v-icon></v-app-bar-nav-icon>
+
+    <v-app-bar :elevation="2" class="" color="black">
+        <img src="@/assets/typo.png" class="typo" alt="Typography">
     </v-app-bar>
+
+    <v-bottom-navigation v-model="nav" bg-color="black" color="indigo-accent-2" grow active>
+        <v-btn @click.stop="router.push('/'); nav =0">
+            <v-icon>mdi-home</v-icon>
+
+            <span class="navigation-item">خانه</span>
+        </v-btn>
+
+        <v-btn @click.stop="router.push('/search'); nav =1">
+            <v-icon>mdi-magnify</v-icon>
+
+            <span class="navigation-item">جستجو</span>
+        </v-btn>
+
+        <v-btn @click.stop="router.push('/bookmarks'); nav =2">
+            <v-icon>mdi-bookmark-outline</v-icon>
+
+            <span class="navigation-item">نشان ها</span>
+        </v-btn>
+
+        <v-btn @click.stop="router.push('/settings'); nav =3">
+            <v-icon>mdi-cog-outline</v-icon>
+
+            <span class="navigation-item">تنظیمات</span>
+        </v-btn>
+    </v-bottom-navigation>
 </template>
 
 <style scoped>
+.navigation-item {
+    letter-spacing: 0;
+}
 a {
     text-decoration: none;
     color: black;
 }
-.bottom-0 {
-    bottom: 0;
+.typo {
+    height: 80%;
+    margin: auto;
 }
 </style>

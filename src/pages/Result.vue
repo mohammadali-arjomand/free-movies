@@ -4,7 +4,6 @@ import {useRoute} from "vue-router";
 import {VApp, VContainer, VRow, VCol} from "vuetify/components";
 import SearchBar from "@/components/SearchBar.vue";
 import MovieCard from "@/components/MovieCard.vue";
-import LoadingCard from "@/components/LoadingCard.vue";
 import router from "@/router";
 
 const query = useRoute().params.query;
@@ -40,27 +39,25 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedri
 <template>
 
     <v-app>
-        <search-bar :value="query" :refresh="true"></search-bar>
         <div v-if="found">
             <p v-if="movies.length === 0" class="msg">
                 همچین عنوانی پیدا نشد!
             </p>
-            <v-container v-else class="mt-14">
+            <v-container v-else class="bg-black">
+                <search-bar :value="query" :close-btn="true" :refresh="true"></search-bar>
                 <v-row>
-                    <v-col cols="6" sm="4" md="3" lg="2" v-for="movie of movies">
+                    <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of movies">
                         <movie-card :movie="movie"></movie-card>
                     </v-col>
                 </v-row>
                 <br>
             </v-container>
         </div>
-        <div v-else>
-            <v-container class="mt-14">
-                <v-row>
-                    <v-col cols="6" sm="4" md="3" lg="2" v-for="n in 24">
-                        <loading-card></loading-card>
-                    </v-col>
-                </v-row>
+        <div v-else class="h-100">
+            <v-container class="bg-black h-100">
+                <div class="text-center h-100 d-flex justify-center align-center">
+                    <v-progress-circular color="indigo-accent-2" indeterminate></v-progress-circular>
+                </div>
             </v-container>
         </div>
     </v-app>

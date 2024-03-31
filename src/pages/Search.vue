@@ -1,17 +1,25 @@
 <script setup>
-    import {VApp, VList, VListItem, VIcon} from "vuetify/components";
+import {VApp, VCol, VContainer, VList, VListItem, VRow} from "vuetify/components";
     import SearchBar from "@/components/SearchBar.vue";
     import router from "@/router";
+    import AppBar from "@/components/AppBar.vue";
+import MovieCard from "@/components/MovieCard.vue";
 
     let searchHistory = localStorage.search === undefined ? [] : JSON.parse(localStorage.search).reverse()
 </script>
 
 <template>
     <v-app>
-        <search-bar :focus="true"></search-bar>
-        <v-list class="mt-14 pt-4">
-            <v-list-item v-for="searchText in searchHistory" prepend-icon="mdi-history" @click="router.push(`/search/${encodeURIComponent(searchText)}`)">{{ searchText }}</v-list-item>
-        </v-list>
+        <app-bar></app-bar>
+        <v-container class="mt-14 h-100 bg-black">
+            <search-bar :focus="true"></search-bar>
+            <v-list class="pt-4 bg-black">
+                <v-list-item v-for="searchText in searchHistory" @click="router.push(`/search/${encodeURIComponent(searchText)}`)">
+                    <v-icon color="indigo-accent-2">mdi-history</v-icon>
+                    {{ searchText }}
+                </v-list-item>
+            </v-list>
+        </v-container>
     </v-app>
 </template>
 

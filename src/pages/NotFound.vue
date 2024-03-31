@@ -19,6 +19,6 @@ p.msg {
 }
 a {
     text-decoration: none;
-    color: royalblue;
+    color: #536DFE;
 }
 </style>

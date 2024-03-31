@@ -7,24 +7,16 @@ import {
     VRow,
     VCol,
     VBtn,
-    VCard,
     VDialog,
     VToolbarTitle,
     VList,
     VListItem,
     VListSubheader,
-    VAppBar,
-    VAppBarTitle,
-    VAppBarNavIcon,
     VIcon,
     VSnackbar
 } from "vuetify/components";
 import {ref} from "vue";
-import LoadingList from "@/components/LoadingList.vue";
 import router from "@/router";
-
-    const copyLink = ref(localStorage.settingsCopyLink === undefined ? false : eval(localStorage.settingsCopyLink))
-    const openWithVlc = ref(localStorage.settingsOpenWithVlc === undefined ? false : eval(localStorage.settingsOpenWithVlc))
 
     const downloadDlg = ref(false)
     const copySuccessSnk = ref(false)
@@ -115,77 +107,140 @@ import router from "@/router";
             <VImg :src="movie.image" class="rounded" />
         </v-dialog>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
-            <v-toolbar color="blue-darken-2">
+            <v-toolbar color="black">
                 <v-btn icon @click.stop="downloadDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title>دانلود</v-toolbar-title>
             </v-toolbar>
-            <div v-if="loaded" class="download-box overflow-x-auto">
-                <v-list v-for="season of seasons" class="h-100">
-                        <h2 class="px-3">{{ season.title }}</h2>
-                        <div v-for="episode of season.episodes">
-                            <v-list-subheader>{{ episode.title }}</v-list-subheader>
-                            <v-list-item v-for="source of episode.sources">
-                                <span>{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</span>
-                                <div class="float-left d-flex gap-4">
-                                    <a :href="source.url" target="_blank"><v-btn color="button"><v-icon>mdi-download</v-icon></v-btn></a>
-                                    <a v-if="openWithVlc" :href="'vlc://' + source.url"><v-btn color="orange-darken-2"><v-icon>mdi-vlc</v-icon></v-btn></a>
-                                    <v-btn v-if="copyLink" color="button-light" @click="copyUrlBtn(source.url)"><v-icon>mdi-content-copy</v-icon></v-btn>
-                                </div>
-                            </v-list-item>
-                        </div>
-                </v-list>
+            <div v-if="loaded" class="download-box overflow-x-auto bg-black">
+                <v-expansion-panels color="black">
+                    <v-expansion-panel v-for="season of seasons" :title="season.title">
+                        <v-expansion-panel-text class="bg-black">
+
+                            <v-list v-for="episode of season.episodes" class="bg-black">
+                                <v-list-subheader class="text-indigo-accent-1 text-center">{{ episode.title }}</v-list-subheader>
+                                <v-list-item v-for="source of episode.sources">
+                                    <div class="source-title">{{ source.quality === null || source.quality === "" ? "کیفیت عادی" : source.quality }}</div>
+                                    <div class="float-left d-flex gap-4">
+                                        <v-btn-toggle rounded="lg">
+                                            <v-btn class="bg-indigo-accent-2">
+                                                <a style="color: white" :href="source.url" target="_blank">
+                                                    <v-icon>mdi-download</v-icon>
+                                                    دانلود
+                                                </a>
+                                            </v-btn>
+                                            <v-btn class="bg-indigo-accent-2">
+                                                <v-icon>mdi-dots-vertical</v-icon>
+                                                <v-menu activator="parent">
+                                                    <v-list>
+                                                        <v-list-item>
+                                                            <v-list-item-title class="py-2">
+                                                                <a :href="'vlc://' + source.url">
+                                                                    <v-icon size="small">mdi-vlc</v-icon>
+                                                                    مشاهده با VLC
+                                                                </a>
+                                                            </v-list-item-title>
+                                                            <v-list-item-title class="py-2" @click="copyUrlBtn(source.url)">
+                                                                    <v-icon size="small">mdi-content-copy</v-icon>
+                                                                    کپی لینک
+                                                            </v-list-item-title>
+                                                        </v-list-item>
+                                                    </v-list>
+                                                </v-menu>
+                                            </v-btn>
+                                        </v-btn-toggle>
+                                    </div>
+                                </v-list-item>
+                            </v-list>
+
+                        </v-expansion-panel-text>
+                    </v-expansion-panel>
+                </v-expansion-panels>
             </div>
             <div v-else class="download-box overflow-x-auto">
-                <loading-list v-for="n in 10"></loading-list>
+                <div class="text-center h-100 d-flex justify-center align-center bg-black">
+                    <v-progress-circular color="indigo-accent-2" indeterminate></v-progress-circular>
+                </div>
             </div>
         </v-dialog>
-        <v-app-bar :elevation="2" color="blue-darken-2">
-            <v-app-bar-nav-icon @click="router.back()"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>
-            <v-app-bar-title v-if="movie.type === 'movie'">فیلم</v-app-bar-title>
-            <v-app-bar-title v-else>سریال</v-app-bar-title>
-            <v-app-bar-nav-icon @click="bookmark">
-                <v-icon v-if="!isBookmark">mdi-bookmark-outline</v-icon>
-                <v-icon v-else>mdi-bookmark</v-icon>
-            </v-app-bar-nav-icon>
-        </v-app-bar>
-        <v-container class="mt-14">
-            <p v-if="movie === null" class="msg">
-                ویدیوی موردنظر شما پیدا نشد
-            </p>
-            <div v-else class="mt-3">
+        <div class="fix-top pa-3">
+            <v-btn density="comfortable" icon="mdi-arrow-right" class="bg-indigo-accent-2" @click.stop="router.back()"></v-btn>
+            <v-btn density="comfortable" :icon="isBookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" class="bg-indigo-accent-2 mr-3" @click.stop="bookmark"></v-btn>
+        </div>
+<!--        <v-app-bar :elevation="2" color="blue-darken-2">-->
+<!--            <v-app-bar-nav-icon @click="router.back()"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>-->
+<!--            <v-app-bar-title v-if="movie.type === 'movie'">فیلم</v-app-bar-title>-->
+<!--            <v-app-bar-title v-else>سریال</v-app-bar-title>-->
+<!--            <v-app-bar-nav-icon @click="bookmark">-->
+<!--                <v-icon v-if="!isBookmark">mdi-bookmark-outline</v-icon>-->
+<!--                <v-icon v-else>mdi-bookmark</v-icon>-->
+<!--            </v-app-bar-nav-icon>-->
+<!--        </v-app-bar>-->
+        <div class="cover">
+            <v-img :src="movie.cover" @click="showImage = true"></v-img>
+            <div class="content">
                 <v-row>
                     <v-col cols="5" md="3" lg="2">
-                        <v-img :src="movie.image" @click="showImage = true" class="rounded"></v-img>
+                        <v-img :src="movie.image" class="rounded" @click="showImage = true"></v-img>
                     </v-col>
                     <v-col cols="7" md="9" lg="10">
                         <h1>{{ movie.title }}</h1>
-                        <table>
-                            <tr>
-                                <td>سال ساخت:</td>
-                                <td>{{ movie.year }}</td>
-                            </tr>
-                            <tr>
-                                <td>کشور سازنده:</td>
-                                <td>{{ movie.country[0].title }}</td>
-                            </tr>
-                            <tr>
-                                <td>امتیاز IMDb:</td>
-                                <td>{{ movie.imdb }}</td>
-                            </tr>
-                        </table>
-                        <v-btn color="button" @click="downloadDlg = true">
-                            <v-icon>mdi-download</v-icon>
-                            <span>دانلود</span>
-                        </v-btn>
+                        <p>{{ movie.title }}</p>
+                        <div class="icon"><v-icon color="indigo-accent-2">mdi-star</v-icon> {{ movie.imdb }}</div>
+                        <div class="star"><v-icon color="indigo-accent-2">mdi-calendar-month</v-icon> {{ movie.year }}</div>
+                        <div class="genres">
+                            <div v-for="genre of movie.genres">{{ genre.title }}</div>
+                        </div>
+
                     </v-col>
                 </v-row>
-                <v-card class="mt-3 pa-3"><pre>{{ movie.description }}</pre></v-card>
+            </div>
+        </div>
+        <v-container class="bg-black">
+            <p v-if="movie === null" class="msg">
+                ویدیوی موردنظر شما پیدا نشد
+            </p>
+            <div v-else>
+                <v-btn class="download-btn" color="indigo-accent-2" @click="downloadDlg = true">
+                    <v-icon>mdi-download</v-icon>
+                    <span>لینک های دانلود</span>
+                </v-btn>
+                <pre>{{ movie.description }}</pre>
             </div>
         </v-container>
     </v-app>
 </template>
 
 <style scoped>
+    .fix-top {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 100;
+    }
+    .source-title {
+        display: inline-block;
+        margin: 12px 0;
+    }
+    .download-btn {
+        margin: 0.5rem 0;
+        width: 100%;
+        letter-spacing: 0;
+        height: 50px;
+        border-radius: 500px;
+    }
+    .cover {
+        position: relative;
+        .content {
+            color: white;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to top, #000, transparent);
+            padding: 1rem;
+        }
+    }
     .msg {
         height: 100vh;
         display: flex;
@@ -206,6 +261,7 @@ import router from "@/router";
     a {
         color: #222222;
         text-decoration: none;
+        letter-spacing: 0;
     }
     .download-box {
         height: 100%;
@@ -213,5 +269,17 @@ import router from "@/router";
     }
     .gap-4 {
         gap: 4px;
+    }
+    .genres {
+        margin-top: 5px;
+        * {
+            display: inline-block;
+            font-size: .75rem;
+            line-height: 1rem;
+            margin: 2px;
+            background-color: #536DFE;
+            border-radius: 50px;
+            padding: .25rem .5rem;
+        }
     }
 </style>

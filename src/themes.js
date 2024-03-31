@@ -38,7 +38,8 @@ const DarkMode = {
 }
 
 export default {
-    Classic,
+
+    lassic,
     DarkMode,
     Modern
 }
