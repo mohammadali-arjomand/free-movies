@@ -13,7 +13,6 @@ import '@mdi/font/css/materialdesignicons.css'
 import './assets/main.css'
 
 // Working
-import themes from "@/themes";
 const vuetify = createVuetify({
     components,
     directives,

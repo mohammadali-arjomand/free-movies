@@ -17,7 +17,6 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
 
     const loaded = ref(false)
 
-
     let movies = []
     if (localStorage.catch === undefined) {
 
@@ -46,14 +45,13 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
     <v-app>
         <app-bar></app-bar>
         <v-container class="mt-14 h-100 bg-black">
+
             <div v-if="!loaded" class="w-100 h-100">
                 <div class="text-center h-100 d-flex justify-center align-center">
                     <v-progress-circular color="indigo-accent-2" indeterminate></v-progress-circular>
                 </div>
             </div>
             <div v-else>
-                <div class="ltr">
-                </div>
                 <v-row>
                     <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of movies">
                         <movie-card :movie="movie"></movie-card>

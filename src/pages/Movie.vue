@@ -100,9 +100,9 @@ import router from "@/router";
 
 <template>
     <v-app>
-        <v-snackbar v-model="copySuccessSnk" :timeout="1000" color="snack">لینک کپی شد!</v-snackbar>
-        <v-snackbar v-model="addBookmarkSnk" :timeout="1000" color="snack">به لیست «نشان ها» اضافه شد!</v-snackbar>
-        <v-snackbar v-model="rmBookmarkSnk" :timeout="1000" color="snack">از لیست «نشان ها» حذف شد!</v-snackbar>
+        <v-snackbar v-model="copySuccessSnk" :timeout="1000" color="indigo-accent-2">لینک کپی شد!</v-snackbar>
+        <v-snackbar v-model="addBookmarkSnk" :timeout="1000" color="indigo-accent-2">به لیست «نشان ها» اضافه شد!</v-snackbar>
+        <v-snackbar v-model="rmBookmarkSnk" :timeout="1000" color="indigo-accent-2">از لیست «نشان ها» حذف شد!</v-snackbar>
         <v-dialog v-model="showImage">
             <VImg :src="movie.image" class="rounded" />
         </v-dialog>
@@ -123,9 +123,8 @@ import router from "@/router";
                                     <div class="float-left d-flex gap-4">
                                         <v-btn-toggle rounded="lg">
                                             <v-btn class="bg-indigo-accent-2">
-                                                <a style="color: white" :href="source.url" target="_blank">
+                                                <a :href="source.url" target="_blank">
                                                     <v-icon>mdi-download</v-icon>
-                                                    دانلود
                                                 </a>
                                             </v-btn>
                                             <v-btn class="bg-indigo-accent-2">
@@ -166,15 +165,6 @@ import router from "@/router";
             <v-btn density="comfortable" icon="mdi-arrow-right" class="bg-indigo-accent-2" @click.stop="router.back()"></v-btn>
             <v-btn density="comfortable" :icon="isBookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" class="bg-indigo-accent-2 mr-3" @click.stop="bookmark"></v-btn>
         </div>
-<!--        <v-app-bar :elevation="2" color="blue-darken-2">-->
-<!--            <v-app-bar-nav-icon @click="router.back()"><v-icon>mdi-arrow-right</v-icon></v-app-bar-nav-icon>-->
-<!--            <v-app-bar-title v-if="movie.type === 'movie'">فیلم</v-app-bar-title>-->
-<!--            <v-app-bar-title v-else>سریال</v-app-bar-title>-->
-<!--            <v-app-bar-nav-icon @click="bookmark">-->
-<!--                <v-icon v-if="!isBookmark">mdi-bookmark-outline</v-icon>-->
-<!--                <v-icon v-else>mdi-bookmark</v-icon>-->
-<!--            </v-app-bar-nav-icon>-->
-<!--        </v-app-bar>-->
         <div class="cover">
             <v-img :src="movie.cover" @click="showImage = true"></v-img>
             <div class="content">
@@ -259,7 +249,7 @@ import router from "@/router";
         word-wrap: break-word;
     }
     a {
-        color: #222222;
+        color: white;
         text-decoration: none;
         letter-spacing: 0;
     }
