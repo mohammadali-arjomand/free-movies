@@ -6,6 +6,11 @@ import SearchBar from "@/components/SearchBar.vue";
 import MovieCard from "@/components/MovieCard.vue";
 import router from "@/router";
 
+const date = new Date;
+if (+(localStorage.catchSearchExpires) < date.getTime()) {
+    localStorage.removeItem("catchSearch");
+}
+
 const query = useRoute().params.query;
 
 let searchHistory = localStorage.search === undefined ? [] : JSON.parse(localStorage.search)
@@ -23,16 +28,25 @@ watch(found, () => {
     }
 })
 
-fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${query}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
-    .then(response => {
-        if (response.ok) return response.json()
-        window.location.reload()
-    })
-    .then(data => {
-            movies = JSON.parse(data.contents).posters;
-            found.value = true;
-        }
-    );
+if (localStorage.catchSearch === undefined || JSON.parse(localStorage.catchSearch).text !== query)
+    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${query}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
+        .then(response => {
+            if (response.ok) return response.json()
+            window.location.reload()
+        })
+        .then(data => {
+                movies = JSON.parse(data.contents).posters;
+                found.value = true;
+
+                const date = new Date;
+                localStorage.setItem("catchSearch", JSON.stringify( { text: query, result: movies } ))
+                localStorage.setItem("catchSearchExpires", (date.getTime() + 30 * 60 * 1000).toString())
+            }
+        );
+else {
+    movies = JSON.parse(localStorage.catchSearch).result
+    found.value = true
+}
 
 </script>
 

@@ -1,9 +1,8 @@
 <script setup>
-import {VApp, VCol, VContainer, VList, VListItem, VRow} from "vuetify/components";
+import {VApp, VContainer, VList, VListItem} from "vuetify/components";
     import SearchBar from "@/components/SearchBar.vue";
     import router from "@/router";
     import AppBar from "@/components/AppBar.vue";
-import MovieCard from "@/components/MovieCard.vue";
 
     let searchHistory = localStorage.search === undefined ? [] : JSON.parse(localStorage.search).reverse()
 </script>

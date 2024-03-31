@@ -1,7 +1,6 @@
 <script setup>
-import {VApp, VAppBar, VAppBarTitle, VAppBarNavIcon, VContainer, VRow, VCol} from "vuetify/components";
+import {VApp, VContainer, VRow, VCol} from "vuetify/components";
 import MovieCard from "@/components/MovieCard.vue";
-import router from "@/router";
 import AppBar from "@/components/AppBar.vue";
 
 const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage.bookmarks).reverse() : []

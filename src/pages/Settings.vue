@@ -1,9 +1,6 @@
 <script setup>
 import {
     VApp,
-    VAppBar,
-    VAppBarTitle,
-    VAppBarNavIcon,
     VIcon,
     VListItemSubtitle,
     VList,
@@ -12,10 +9,7 @@ import {
     VDivider,
     VDialog, VSnackbar
 } from "vuetify/components";
-import router from "@/router";
 import {ref, watch} from "vue";
-import {useTheme} from "vuetify";
-import {tr} from "vuetify/locale";
 import AppBar from "@/components/AppBar.vue";
 
 const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eval(localStorage.settingsAutoEnter))
@@ -23,6 +17,8 @@ const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eva
 const clearConfirmDlg = ref(false)
 const clearConfirmSnk = ref(false)
 const resetDataDlg = ref(false)
+const clearCatchDlg = ref(false)
+const clearCatchSnk = ref(false)
 const contact = ref(false)
 
 watch(autoEnter, () => {
@@ -40,11 +36,21 @@ function resetData() {
     localStorage.clear()
     window.location.assign("/")
 }
+
+function clearCatch() {
+    clearCatchDlg.value = false
+    localStorage.removeItem("catch")
+    localStorage.removeItem("catchExpires")
+    localStorage.removeItem("catchSearch")
+    localStorage.removeItem("catchSearchExpires")
+    clearCatchSnk.value = true
+}
 </script>
 
 <template>
     <v-app>
-        <v-snackbar v-model="clearConfirmSnk" :timeout="1000" color="snack">تاریخچه جستجو با موفقیت پاک شد!</v-snackbar>
+        <v-snackbar v-model="clearConfirmSnk" :timeout="1000" color="indigo-accent-2">تاریخچه جستجو با موفقیت پاک شد!</v-snackbar>
+        <v-snackbar v-model="clearCatchSnk" :timeout="1000" color="indigo-accent-2">حافظه پنهان با موفقیت پاک شد!</v-snackbar>
         <v-dialog v-model="clearConfirmDlg">
             <v-card title="فری مووی">
                 <v-card-text>
@@ -54,6 +60,18 @@ function resetData() {
                     <v-spacer></v-spacer>
                     <v-btn text="بله" class="letter" color="red" @click="clearSearchHistory"></v-btn>
                     <v-btn text="خیر" class="letter" @click="clearConfirmDlg = false"></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="clearCatchDlg">
+            <v-card title="فری مووی">
+                <v-card-text>
+                    آیا میخواهید حافظه پنهان را پاک کنید؟
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="بله" class="letter" color="red" @click="clearCatch"></v-btn>
+                    <v-btn text="خیر" class="letter" @click="clearCatchDlg = false"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -105,10 +123,16 @@ function resetData() {
                     تاریخچه جسجتوهای شما به طور کامل پاک می شوند و دیگر در دسترس نیستند.
                 </v-list-item-subtitle>
             </v-list-item>
+            <v-list-item class="py-0" @click="clearCatchDlg = true">
+                <span>پاکسازی حافظه پنهان</span>
+                <v-list-item-subtitle>
+                    فری مووی برای افزایش سرعت و بهینه شدن از حافظه پنهان (کش) استفاده میکند. میتوانید این حافظه پنهان را حذف کنید.
+                </v-list-item-subtitle>
+            </v-list-item>
             <v-list-item class="py-0" @click="resetDataDlg = true">
                 <span>بازنشانی اطلاعات</span>
                 <v-list-item-subtitle>
-                    تمام اطلاعات شما در برنامه از جمله تنظیمات، تاریخچه، نشان ها و... از بین می روند.
+                    تمام اطلاعات شما در برنامه از جمله تنظیمات، حافظه پنهان، نشان ها و... از بین می روند.
                 </v-list-item-subtitle>
             </v-list-item>
             <v-divider/>
