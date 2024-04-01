@@ -67,6 +67,7 @@ import router from "@/router";
     }
 
     const showImage = ref(false)
+    const offline = ref(false)
 
     const loaded = ref(true)
     const seasons = ref([])
@@ -94,7 +95,14 @@ import router from "@/router";
                     seasons.value = JSON.parse(data.contents)
                     loaded.value = true
                 }
-            );
+            )
+            .catch(error => {
+                offline.value = true
+            })
+    }
+
+    function refresh() {
+        location.reload()
     }
 </script>
 
@@ -156,8 +164,15 @@ import router from "@/router";
                 </v-expansion-panels>
             </div>
             <div v-else class="download-box overflow-x-auto">
-                <div class="text-center h-100 d-flex justify-center align-center bg-black">
+                <div v-if="!offline" class="text-center h-100 d-flex justify-center align-center bg-black">
                     <v-progress-circular color="indigo-accent-2" indeterminate></v-progress-circular>
+                </div>
+                <div v-else class="text-center h-100 flex-column d-flex justify-center align-center bg-black">
+                    <p>خطا در اتصال به سرور</p>
+                    <v-btn class="letter rounded-pill mt-3" color="indigo-accent-2" @click.stop="refresh">
+                        <v-icon class="ml-1">mdi-reload</v-icon>
+                        تلاش مجدد
+                    </v-btn>
                 </div>
             </div>
         </v-dialog>
