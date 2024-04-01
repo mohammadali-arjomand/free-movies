@@ -190,7 +190,7 @@ import router from "@/router";
                 ویدیوی موردنظر شما پیدا نشد
             </p>
             <div v-else>
-                <v-btn class="download-btn" color="indigo-accent-2" @click="downloadDlg = true">
+                <v-btn class="download-btn mb-5" color="indigo-accent-2" @click="downloadDlg = true">
                     <v-icon>mdi-download</v-icon>
                     <span>لینک های دانلود</span>
                 </v-btn>

@@ -12,6 +12,7 @@ if (+(localStorage.catchSearchExpires) < date.getTime()) {
 }
 
 const query = useRoute().params.query;
+const offline = ref(false)
 
 let searchHistory = localStorage.search === undefined ? [] : JSON.parse(localStorage.search)
 searchHistory = searchHistory.filter(value => value !== query)
@@ -32,7 +33,6 @@ if (localStorage.catchSearch === undefined || JSON.parse(localStorage.catchSearc
     fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${query}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
         .then(response => {
             if (response.ok) return response.json()
-            window.location.reload()
         })
         .then(data => {
                 movies = JSON.parse(data.contents).posters;
@@ -42,10 +42,18 @@ if (localStorage.catchSearch === undefined || JSON.parse(localStorage.catchSearc
                 localStorage.setItem("catchSearch", JSON.stringify( { text: query, result: movies } ))
                 localStorage.setItem("catchSearchExpires", (date.getTime() + 30 * 60 * 1000).toString())
             }
-        );
+        )
+        .catch(error => {
+            offline.value = true
+            // localStorage.removeItem("catchSearch")
+        })
 else {
     movies = JSON.parse(localStorage.catchSearch).result
     found.value = true
+}
+
+function refresh() {
+    location.reload()
 }
 
 </script>
@@ -69,8 +77,15 @@ else {
         </div>
         <div v-else class="h-100">
             <v-container class="bg-black h-100">
-                <div class="text-center h-100 d-flex justify-center align-center">
+                <div v-if="!offline" class="text-center h-100 d-flex justify-center align-center">
                     <v-progress-circular color="indigo-accent-2" indeterminate></v-progress-circular>
+                </div>
+                <div v-else class="text-center h-100 flex-column d-flex justify-center align-center">
+                    <p>خطا در اتصال به سرور</p>
+                    <v-btn class="letter rounded-pill mt-3" color="indigo-accent-2" @click.stop="refresh">
+                        <v-icon class="ml-1">mdi-reload</v-icon>
+                        تلاش مجدد
+                    </v-btn>
                 </div>
             </v-container>
         </div>

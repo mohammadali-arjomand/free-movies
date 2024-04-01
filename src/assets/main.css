@@ -27,3 +27,7 @@ html, body {
 .v-list-item__prepend {
     width: 32px;
 }
+
+.v-application {
+    background: #000000 !important;
+}

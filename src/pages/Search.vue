@@ -18,6 +18,7 @@ import {VApp, VContainer, VList, VListItem} from "vuetify/components";
                     {{ searchText }}
                 </v-list-item>
             </v-list>
+            <br><br><br>
         </v-container>
     </v-app>
 </template>

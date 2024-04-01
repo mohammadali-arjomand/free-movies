@@ -23,7 +23,7 @@
 
     <v-bottom-navigation v-model="nav" bg-color="black" color="indigo-accent-2" grow active>
         <v-btn @click.stop="router.push('/'); nav =0">
-            <v-icon>mdi-home</v-icon>
+            <v-icon>mdi-home-outline</v-icon>
 
             <span class="navigation-item">خانه</span>
         </v-btn>

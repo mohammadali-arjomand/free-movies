@@ -14,8 +14,8 @@ export default defineConfig({
             "short_name": "Free Movie",
             "start_url": "/",
             "display": "standalone",
-            "background_color": "#ffffff",
-            "theme_color": "#000000",
+            "background_color": "#000000",
+            "theme_color": "#536DFE",
             "description": "دانلود و تماشای فیلم و سریال",
             "icons": [
                 {
@@ -37,6 +37,10 @@ export default defineConfig({
             'icons/icon-192.png',
             'icons/icon-512.png'
         ],
+        workbox: {
+            mode: "InjectManifest",
+            
+        },
         mode: 'development'
     })
   ],
