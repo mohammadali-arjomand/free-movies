@@ -1,12 +1,15 @@
 <script setup>
     import router from "@/router";
-    const props = defineProps(["value", "focus", "refresh", "closeBtn"])
+    const props = defineProps(["value", "focus", "refresh", "closeBtn", "filterSearchHistory"])
 
     function search() {
         router.push(`/search/${document.getElementById("searchText").value}`)
             .then(() => {
                 props.refresh === true ? location.reload() : null
             })
+    }
+    function searchFieldKeyEvent(filterSearchHistory) {
+        filterSearchHistory ? filterSearchHistory(document.getElementById('searchText').value) : null
     }
 
     function close() {
@@ -25,7 +28,7 @@
     <v-row>
         <v-col>
             <form @submit.prevent="search">
-                <input id="searchText" :value="value" placeholder="جستجو میان هزاران فیلم و سریال" :autofocus="focus" autocomplete="off">
+                <input id="searchText" :value="value" @keyup="searchFieldKeyEvent(filterSearchHistory)" placeholder="جستجو میان هزاران فیلم و سریال" :autofocus="focus" autocomplete="off">
             </form>
         </v-col>
         <v-col v-if="closeBtn" cols="2" class="d-flex justify-center align-center">
