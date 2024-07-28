@@ -1,6 +1,6 @@
 # Free Movies
 
-An open-source webpage created via VueJs for watch and download movies & series for free
+An open-source webpage created via VueJs for watch and download movies & serials for free
 
 
 [Creator's GitHub](https://github.com/arjomand-dev)
