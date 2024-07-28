@@ -15,7 +15,7 @@ const query = useRoute().params.query;
 const offline = ref(false)
 
 let searchHistory = localStorage.search === undefined ? [] : JSON.parse(localStorage.search)
-searchHistory = searchHistory.filter(value => value !== query)
+searchHistory = searchHistory.filter(value => value.toLowerCase() !== query.toLowerCase())
 searchHistory.push(query)
 localStorage.search = JSON.stringify(searchHistory)
 
