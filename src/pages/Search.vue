@@ -6,6 +6,7 @@
     import {ref} from "vue";
 
     const removeDlg = ref(false)
+    const removeConfirmDlg = ref(false)
     const removeHistory = ref([])
     const isSearching = ref(false)
 
@@ -31,6 +32,18 @@
 
 <template>
     <v-app>
+        <v-dialog v-model="removeConfirmDlg">
+            <v-card title="فری مووی">
+                <v-card-text>
+                    از حذف موارد انتخاب شده مطمئن هستید؟
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="بله" class="letter" color="red" @click="removeSelectedItems"></v-btn>
+                    <v-btn text="خیر" class="letter" @click="removeConfirmDlg = false"></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-dialog v-model="removeDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="black">
                 <v-btn icon @click.stop="removeDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
@@ -45,7 +58,9 @@
                         color="deep-orange-darken-1"
                         style="height: 50px"
                 ></v-checkbox>
-                <v-btn @click="removeSelectedItems" style="letter-spacing: 0" block color="deep-orange-darken-1">حذف موارد انتخاب شده</v-btn>
+                <div style="padding: 50px">
+                    <v-btn @click="removeConfirmDlg = true" style="letter-spacing: 0" block color="deep-orange-darken-1">حذف موارد انتخاب شده</v-btn>
+                </div>
             </div>
         </v-dialog>
         <app-bar></app-bar>
@@ -66,4 +81,8 @@
     </v-app>
 </template>
 
-<style scoped></style>
+<style scoped>
+.letter {
+    letter-spacing: 0;
+}
+</style>
