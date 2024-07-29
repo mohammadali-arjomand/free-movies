@@ -13,6 +13,7 @@ import {ref, watch} from "vue";
 import AppBar from "@/components/AppBar.vue";
 
 const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eval(localStorage.settingsAutoEnter))
+const showGenres = ref(localStorage.settingsShowGenres === undefined ? true : eval(localStorage.settingsShowGenres))
 
 const clearConfirmDlg = ref(false)
 const clearConfirmSnk = ref(false)
@@ -23,6 +24,10 @@ const contact = ref(false)
 
 watch(autoEnter, () => {
     localStorage.settingsAutoEnter = autoEnter.value;
+})
+
+watch(showGenres, () => {
+    localStorage.settingsShowGenres = showGenres.value;
 })
 
 function clearSearchHistory() {
@@ -115,7 +120,15 @@ function clearCatch() {
                     در صورتی که جستجو فقط یک نتیجه داشت، به صورت خودکار وارد آن شود.
                 </v-list-item-subtitle>
             </v-list-item>
-
+            <v-list-item class="py-0">
+                <span>
+                    لیست ژانرها
+                    <v-switch v-model="showGenres" class="float-left ml-3" color="indigo-accent-2" />
+                </span>
+                <v-list-item-subtitle>
+                    اگر غیرفعال شود، لیست ژانرها از زیر کارت فیلم ها حذف خواهد شد.
+                </v-list-item-subtitle>
+            </v-list-item>
             <v-divider/>
             <v-list-item class="py-0" @click="clearConfirmDlg = true">
                 <span>پاکسازی تاریخچه جستجو</span>

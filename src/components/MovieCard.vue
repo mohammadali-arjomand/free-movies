@@ -3,6 +3,7 @@ import {VCard, VImg} from "vuetify/components";
 import router from "@/router";
 
 const props = defineProps(["movie"])
+const showGenres = localStorage.settingsShowGenres === undefined ? true : eval(localStorage.settingsShowGenres)
 
 function openMovie(movie) {
     localStorage.movie = JSON.stringify(movie);
@@ -20,7 +21,7 @@ function openMovie(movie) {
                 <p>{{ movie.title }}</p>
                 <div class="icon"><v-icon color="indigo-accent-2">mdi-star</v-icon> {{ movie.imdb }}</div>
                 <div class="star"><v-icon color="indigo-accent-2">mdi-calendar-month</v-icon> {{ movie.year }}</div>
-                <div class="genres">
+                <div class="genres" v-if="showGenres">
                     <div v-for="genre of movie.genres">{{ genre.title }}</div>
                 </div>
             </v-col>
