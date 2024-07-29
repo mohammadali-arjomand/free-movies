@@ -9,6 +9,7 @@ import NotFound from "@/pages/NotFound.vue";
 import Movie from "@/pages/Movie.vue";
 import Settings from "@/pages/Settings.vue";
 import Bookmarks from "@/pages/Bookmarks.vue";
+import Open from "@/pages/Open.vue";
 
 const routes = [
     { path: "/", component: Home },
@@ -17,6 +18,7 @@ const routes = [
     { path: "/settings", component: Settings },
     { path: "/search", component: Search },
     { path: "/search/:query", component: Result },
+    { path: "/s/:data", component: Open },
     { path: '/:pathMatch(.*)*', component: NotFound },
 ]
 

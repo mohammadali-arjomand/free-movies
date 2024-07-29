@@ -66,6 +66,20 @@ import router from "@/router";
         isBookmark.value = !isBookmark.value
     }
 
+    function shareMovie() {
+        const shareUrlData = {
+            name: movie.title.replace("’", "'"),
+            year: movie.year,
+            id: movie.id
+        }
+
+        const shareData = {
+            text : `فیلم «${movie.title}» رو از فری مووی ببین:`,
+            url : location.protocol +"//"+ location.hostname + "/s/" + btoa(JSON.stringify(shareUrlData))
+        }
+        navigator.share(shareData)
+    }
+
     const showImage = ref(false)
     const offline = ref(false)
 
@@ -178,6 +192,7 @@ import router from "@/router";
         </v-dialog>
         <div class="fix-top pa-3">
             <v-btn density="comfortable" icon="mdi-arrow-right" class="bg-indigo-accent-2" @click.stop="router.back()"></v-btn>
+            <v-btn density="comfortable" icon="mdi-share-variant-outline" class="bg-indigo-accent-2 mr-3" @click.stop="shareMovie"></v-btn>
             <v-btn density="comfortable" :icon="isBookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" class="bg-indigo-accent-2 mr-3" @click.stop="bookmark"></v-btn>
         </div>
         <div class="cover">
