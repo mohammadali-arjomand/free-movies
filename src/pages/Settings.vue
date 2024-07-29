@@ -98,7 +98,7 @@ function clearCatch() {
                         تلگرام
                     </a>
                     <br>
-                    <a href="https://github.com/arjomand-dev" style="color: white">
+                    <a href="https://ir.linkedin.com/in/mohammad-ali-arjomand-b735b5279" style="color: white">
                         <v-icon color="indigo-accent-2">mdi-linkedin</v-icon>
                         لینکدین
                     </a>
@@ -148,7 +148,7 @@ function clearCatch() {
             <v-list-item class="py-0" @click="clearConfirmDlg = true">
                 <span>پاکسازی تاریخچه جستجو</span>
                 <v-list-item-subtitle>
-                    تاریخچه جسجتوهای شما به طور کامل پاک می شوند و دیگر در دسترس نیستند.
+                    تاریخچه جستجوهای شما به طور کامل پاک می شوند و دیگر در دسترس نیستند.
                 </v-list-item-subtitle>
             </v-list-item>
             <v-list-item class="py-0" @click="clearCatchDlg = true">
