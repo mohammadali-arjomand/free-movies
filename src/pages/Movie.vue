@@ -13,14 +13,31 @@ import {
     VListItem,
     VListSubheader,
     VIcon,
-    VSnackbar
+    VSnackbar, VCheckbox
 } from "vuetify/components";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import router from "@/router";
 
     const downloadDlg = ref(false)
+    const collectionDlg = ref(false)
+    const newCollectionDlg = ref(false)
     const copySuccessSnk = ref(false)
+
+    const newCollectionMdl = ref("")
+
+    const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
     const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
+
+    const selectedCollections = ref([])
+    for (let i in collections.value) {
+        for (let j in collections.value[i].content) {
+            if (collections.value[i].content[j].id === movie.id) {
+                selectedCollections.value.push(+(i))
+            }
+        }
+    }
+    console.log(selectedCollections.value)
+
     if (localStorage.settingsSaveHistory !== "false" && movie !== null) {
         if (localStorage.history === undefined) {
             localStorage.history = JSON.stringify([movie])
@@ -36,6 +53,22 @@ import router from "@/router";
             localStorage.history = JSON.stringify(history)
         }
     }
+
+    watch(selectedCollections, () => {
+        for (let i in collections.value) {
+            for (let j in collections.value[i].content) {
+                if (collections.value[i].content[j].id === movie.id) {
+                    collections.value[i].content.splice(j, 1)
+                }
+            }
+        }
+
+        for (let i of selectedCollections.value) {
+            collections.value[i].content.push(movie)
+        }
+
+        localStorage.collections = JSON.stringify(collections.value)
+    })
 
     function copyUrlBtn(url) {
         navigator.clipboard.writeText(url)
@@ -64,6 +97,16 @@ import router from "@/router";
             addBookmarkSnk.value = true
         }
         isBookmark.value = !isBookmark.value
+    }
+
+    function newCollection() {
+        collections.value.push({
+            title: newCollectionMdl.value,
+            content: []
+        })
+        localStorage.collections = JSON.stringify(collections.value)
+        newCollectionMdl.value = ""
+        newCollectionDlg.value = false
     }
 
     function shareMovie() {
@@ -190,10 +233,52 @@ import router from "@/router";
                 </div>
             </div>
         </v-dialog>
+        <v-dialog v-model="collectionDlg">
+            <v-card title="مجموعه ها">
+                <v-btn :icon="isBookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" class="bg-indigo-accent-2 fix-bookmark" @click.stop="bookmark"></v-btn>
+                <v-card-item>
+                    <v-checkbox
+                            v-for="(collection, i) in collections"
+                            v-model="selectedCollections"
+                            :label="collection.title"
+                            :value="i"
+                            color="indigo-accent-2"
+                            style="height: 50px"
+                    ></v-checkbox>
+                    <v-btn block class="letter justify-start pa-2" @click="newCollectionDlg = true">
+                        <v-icon size="25" color="indigo-accent-2">mdi-playlist-plus</v-icon>
+                        مجموعه جدید
+                    </v-btn>
+                </v-card-item>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="بستن" class="letter" @click="collectionDlg = false"></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="newCollectionDlg">
+            <v-card title="مجموعه جدید">
+                <v-card-text>
+                    نام مجموعه جدید را وارد کنید
+                </v-card-text>
+                <v-card-item>
+                    <v-text-field
+                            hide-details="auto"
+                            label="مثال: موردعلاقه ها"
+                            v-model="newCollectionMdl"
+                    ></v-text-field>
+                </v-card-item>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="لغو" class="letter" @click="newCollectionDlg = false"></v-btn>
+                    <v-btn text="تایید" class="letter" color="indigo-accent-2" @click="newCollection"></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <div class="fix-top pa-3">
             <v-btn density="comfortable" icon="mdi-arrow-right" class="bg-indigo-accent-2" @click.stop="router.back()"></v-btn>
             <v-btn density="comfortable" icon="mdi-share-variant-outline" class="bg-indigo-accent-2 mr-3" @click.stop="shareMovie"></v-btn>
-            <v-btn density="comfortable" :icon="isBookmark ? 'mdi-bookmark' : 'mdi-bookmark-outline'" class="bg-indigo-accent-2 mr-3" @click.stop="bookmark"></v-btn>
+            <v-btn density="comfortable" icon="mdi-bookmark-box-multiple-outline" class="bg-indigo-accent-2 mr-3" @click.stop="collectionDlg = true"></v-btn>
         </div>
         <div class="cover">
             <v-img :src="movie.cover" @click="showImage = true"></v-img>
@@ -301,5 +386,15 @@ import router from "@/router";
             border-radius: 50px;
             padding: .25rem .5rem;
         }
+    }
+    .letter {
+        letter-spacing: 0;
+    }
+    .fix-bookmark {
+        position: absolute;
+        top: 6px;
+        left: 15px;
+        background: transparent !important;
+        box-shadow: none;
     }
 </style>

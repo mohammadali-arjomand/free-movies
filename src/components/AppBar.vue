@@ -9,6 +9,7 @@
         switch (router.currentRoute._value.fullPath) {
             case "/": return 0
             case "/search": return 1
+            case "/collections":
             case "/bookmarks": return 2
             case "/settings": return 3
         }
@@ -34,10 +35,10 @@
             <span class="navigation-item">جستجو</span>
         </v-btn>
 
-        <v-btn @click.stop="router.push('/bookmarks'); nav =2">
-            <v-icon>mdi-bookmark-outline</v-icon>
+        <v-btn @click.stop="router.push('/collections'); nav =2">
+            <v-icon>mdi-bookmark-box-multiple-outline</v-icon>
 
-            <span class="navigation-item">نشان ها</span>
+            <span class="navigation-item">مجموعه ها</span>
         </v-btn>
 
         <v-btn @click.stop="router.push('/settings'); nav =3">
