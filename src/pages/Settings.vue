@@ -83,9 +83,24 @@ function clearCatch() {
         <v-dialog v-model="contact">
             <v-card title="ارتباط با توسعه دهنده">
                 <v-card-text>
-                    <a href="mailto:arjomand.dev@gmail.com">
-                        <v-icon>mdi-email-plus</v-icon>
+                    <a href="mailto:arjomand.dev@gmail.com" style="color: white">
+                        <v-icon color="indigo-accent-2">mdi-email-plus</v-icon>
                         ایمیل
+                    </a>
+                    <br>
+                    <a href="https://github.com/arjomand-dev" style="color: white">
+                        <v-icon color="indigo-accent-2">mdi-github</v-icon>
+                        گیت هاب
+                    </a>
+                    <br>
+                    <a href="https://t.me/ArjomandDev" style="color: white">
+                        <v-icon color="indigo-accent-2">mdi-message-text-outline</v-icon>
+                        تلگرام
+                    </a>
+                    <br>
+                    <a href="https://github.com/arjomand-dev" style="color: white">
+                        <v-icon color="indigo-accent-2">mdi-linkedin</v-icon>
+                        لینکدین
                     </a>
                 </v-card-text>
                 <v-card-actions>
@@ -152,7 +167,7 @@ function clearCatch() {
             <v-list-item class="py-0" @click="contact = true">
                 <span>ارتباط با توسعه دهنده</span>
                 <v-list-item-subtitle>
-                    برای پرسیدن سوالات و ارسال پیشنهادات میتوانید با توسعه دهنده این برنامه در ارتباط باشد. برای اینکار روی همین بخش ضربه بزنید.
+                    برای پرسیدن سوالات و ارسال پیشنهادات میتوانید با توسعه دهنده این برنامه در ارتباط باشید.
                 </v-list-item-subtitle>
             </v-list-item>
         </v-list>
