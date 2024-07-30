@@ -17,7 +17,6 @@ import router from "@/router";
 
 const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
 const isEmpty = collections.value.length === 0
-console.log(isEmpty)
 const newCollectionDlg = ref(false)
 const newCollectionMdl = ref("")
 const openCollection = ref()

@@ -37,7 +37,6 @@ for (let movie of props.collection.content) {
 let avg = totalScoresOfMovies / props.collection.content.length
 
 avg = `${avg}`.substring(0, 3)
-console.log(countries)
 </script>
 
 <template>
