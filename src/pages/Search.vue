@@ -58,7 +58,7 @@
                         color="deep-orange-darken-1"
                         style="height: 50px"
                 ></v-checkbox>
-                <div style="padding: 50px">
+                <div v-show="removeHistory.length > 0" style="padding: 50px">
                     <v-btn @click="removeConfirmDlg = true" style="letter-spacing: 0" block color="deep-orange-darken-1">حذف موارد انتخاب شده</v-btn>
                 </div>
             </div>
