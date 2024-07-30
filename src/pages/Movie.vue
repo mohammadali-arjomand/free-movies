@@ -36,7 +36,6 @@ import router from "@/router";
             }
         }
     }
-    console.log(selectedCollections.value)
 
     if (localStorage.settingsSaveHistory !== "false" && movie !== null) {
         if (localStorage.history === undefined) {
@@ -79,7 +78,7 @@ import router from "@/router";
     const rmBookmarkSnk = ref(false)
     const checkBookmark = () => {
         let isExists = false
-        JSON.parse(localStorage.bookmarks).forEach(i => isExists = i.id === movie.id)
+        JSON.parse(localStorage.bookmarks).forEach(i => isExists = isExists ? true : i.id === movie.id)
         return isExists
     }
     const isBookmark = ref(localStorage.bookmarks === undefined || movie === null ? false : checkBookmark())
