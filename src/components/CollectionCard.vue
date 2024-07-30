@@ -21,6 +21,23 @@ function editCollectionTitle() {
     localStorage.collections = JSON.stringify(collections.value)
     location.reload()
 }
+
+let totalScoresOfMovies = 0
+let firstYear = 0;
+let lastYear = 0;
+let countries = []
+for (let movie of props.collection.content) {
+    totalScoresOfMovies += movie.imdb
+    if (firstYear === 0 || movie.year < firstYear) firstYear = movie.year
+    if (movie.year > lastYear) lastYear = movie.year
+    for (let country of movie.country) {
+        if (!countries.includes(country.title)) countries.push(country.title)
+    }
+}
+let avg = totalScoresOfMovies / props.collection.content.length
+
+avg = `${avg}`.substring(0, 3)
+console.log(countries)
 </script>
 
 <template>
@@ -62,9 +79,22 @@ function editCollectionTitle() {
             </v-col>
             <v-col cols="8">
                 <p>{{ collection.title }}</p>
-                <div class="icon my-4" style="font-size: 13px">
+                <div class="mt-4" style="font-size: 13px">
                     تعداد فیلم:
                     <span style="color: #536DFE">{{ collection.content.length }}</span>
+                </div>
+                <div style="font-size: 13px">
+                    میانگین امتیاز:
+                    <span style="color: #536DFE">{{ avg }}</span>
+                </div>
+                <div style="font-size: 13px">
+                    بازه تولید: از
+                    <span style="color: #536DFE">{{ firstYear }}</span>
+                    تا
+                    <span style="color: #536DFE">{{ lastYear }}</span>
+                </div>
+                <div class="countries">
+                    <div v-for="country of countries">{{ country }}</div>
                 </div>
                     <v-btn class="bg-transparent fix-menu" size="small" style="height: 50px; border-radius: 50px">
                         <v-icon>mdi-dots-vertical</v-icon>
@@ -96,5 +126,17 @@ function editCollectionTitle() {
     position: absolute;
     top: 0;
     left: 5px;
+}
+.countries {
+    margin-top: 5px;
+    * {
+        display: inline-block;
+        font-size: .75rem;
+        line-height: 1rem;
+        margin: 2px;
+        background-color: #536DFE;
+        border-radius: 50px;
+        padding: .25rem .5rem;
+    }
 }
 </style>
