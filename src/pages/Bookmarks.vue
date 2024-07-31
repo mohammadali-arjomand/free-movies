@@ -46,6 +46,7 @@ function unpinMovie(movieId) {
                         </v-col>
                     </v-row>
                 </v-col>
+                <v-divider></v-divider>
                 <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of unpinnedMovies">
                     <v-row>
                         <v-col cols="10">
