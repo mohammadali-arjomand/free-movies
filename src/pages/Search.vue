@@ -46,7 +46,7 @@
         </v-dialog>
         <v-dialog v-model="removeDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="black">
-                <v-btn icon @click.stop="removeDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
+                <v-btn @click.stop="removeDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title>حذف سوابق جستجو</v-toolbar-title>
             </v-toolbar>
             <div class="download-box overflow-x-auto bg-black h-100">
@@ -58,9 +58,7 @@
                         color="deep-orange-darken-1"
                         style="height: 50px"
                 ></v-checkbox>
-                <div v-show="removeHistory.length > 0" style="padding: 50px">
-                    <v-btn @click="removeConfirmDlg = true" style="letter-spacing: 0" block color="deep-orange-darken-1">حذف موارد انتخاب شده</v-btn>
-                </div>
+                <v-btn class="fixed" v-show="removeHistory.length > 0" icon="mdi-delete-outline" @click="removeConfirmDlg = true" color="deep-orange-darken-1"></v-btn>
             </div>
         </v-dialog>
         <app-bar></app-bar>
@@ -84,5 +82,10 @@
 <style scoped>
 .letter {
     letter-spacing: 0;
+}
+.fixed {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
 }
 </style>
