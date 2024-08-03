@@ -62,9 +62,13 @@ function refresh() {
 
     <v-app>
         <div v-if="found">
-            <p v-if="movies.length === 0" class="msg">
-                همچین عنوانی پیدا نشد!
-            </p>
+            <div v-if="movies.length === 0" class="text-center h-100 flex-column d-flex justify-center align-center">
+                <p>همچین عنوانی پیدا نشد!</p>
+                <v-btn class="letter rounded-pill mt-3" color="indigo-accent-2" @click.stop="refresh">
+                    <v-icon class="ml-1">mdi-reload</v-icon>
+                    تلاش مجدد
+                </v-btn>
+            </div>
             <v-container v-else class="bg-black">
                 <search-bar :value="query" :close-btn="true" :refresh="true"></search-bar>
                 <v-row>
@@ -107,17 +111,12 @@ p.msg {
     align-items: center;
 }
 
-.container {
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-}
-
 a {
     text-decoration: none;
     color: royalblue;
+}
+
+.letter {
+    letter-spacing: 0;
 }
 </style>
