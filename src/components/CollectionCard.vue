@@ -78,22 +78,27 @@ avg = `${avg}`.substring(0, 3)
             </v-col>
             <v-col cols="8">
                 <p>{{ collection.title }}</p>
-                <div class="mt-4" style="font-size: 13px">
-                    تعداد فیلم:
-                    <span style="color: #536DFE">{{ collection.content.length }}</span>
+                <div v-if="collection.content.length > 0">
+                    <div class="mt-4" style="font-size: 13px">
+                        تعداد فیلم:
+                        <span style="color: #536DFE">{{ collection.content.length }}</span>
+                    </div>
+                    <div style="font-size: 13px">
+                        میانگین امتیاز:
+                        <span style="color: #536DFE">{{ avg }}</span>
+                    </div>
+                    <div style="font-size: 13px">
+                        بازه تولید: از
+                        <span style="color: #536DFE">{{ firstYear }}</span>
+                        تا
+                        <span style="color: #536DFE">{{ lastYear }}</span>
+                    </div>
+                    <div class="countries">
+                        <div v-for="country of countries">{{ country }}</div>
+                    </div>
                 </div>
-                <div style="font-size: 13px">
-                    میانگین امتیاز:
-                    <span style="color: #536DFE">{{ avg }}</span>
-                </div>
-                <div style="font-size: 13px">
-                    بازه تولید: از
-                    <span style="color: #536DFE">{{ firstYear }}</span>
-                    تا
-                    <span style="color: #536DFE">{{ lastYear }}</span>
-                </div>
-                <div class="countries">
-                    <div v-for="country of countries">{{ country }}</div>
+                <div v-else>
+                    <p class="text-indigo-accent-2 mt-3 font-italic">این مجموعه خالی است!</p>
                 </div>
                     <v-btn class="bg-transparent fix-menu" size="small" style="height: 50px; border-radius: 50px">
                         <v-icon>mdi-dots-vertical</v-icon>

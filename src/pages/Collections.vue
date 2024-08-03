@@ -28,8 +28,7 @@ function newCollection() {
         content: []
     })
     localStorage.collections = JSON.stringify(collections.value)
-    newCollectionMdl.value = ""
-    newCollectionDlg.value = false
+    location.reload()
 }
 
 
@@ -50,6 +49,9 @@ function newCollection() {
                         <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of openCollection.content.reverse()">
                             <movie-card :movie="movie"></movie-card>
                         </v-col>
+                        <p class="msg" v-if="openCollection.content.length === 0">
+                            این مجموعه خالی است
+                        </p>
                     </v-row>
                 </v-container>
             </v-expansion-panels>
@@ -85,7 +87,7 @@ function newCollection() {
 
         <v-row>
             <v-col cols="12" sm="6" md="6" lg="3" v-for="(collection, i) of reversedCollections" @click="openCollection = collection; showCollectionDlg=true">
-                <collection-card :collection="collection" :id="i"></collection-card>
+                <collection-card :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
             </v-col>
         </v-row>
         <p v-if="isEmpty" class="mt-4 d-flex justify-center align-center h-100 text-center">
@@ -108,11 +110,19 @@ function newCollection() {
     letter-spacing: 0;
 }
 .full-height {
-    height: 100vh;
+    height: 100%;
 }
 .fixed {
     position: fixed;
     left: 20px;
     bottom: 80px;
+}
+p.msg {
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 </style>
