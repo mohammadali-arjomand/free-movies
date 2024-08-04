@@ -23,6 +23,7 @@ const collection = localStorage.collection !== undefined ? JSON.parse(localStora
                 </p>
             </v-row>
         </v-container>
+        <br><br><br>
     </v-app>
 
 </template>
