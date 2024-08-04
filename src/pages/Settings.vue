@@ -183,8 +183,8 @@ function openFarsroid() {
             </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <div class="text-center mt-3" onclick="alert('نسخه 5.0.2 آزمایشی')">
-            v5.0.2 Beta
+        <div class="text-center mt-3" onclick="alert('نسخه 5.0.3 آزمایشی')">
+            v5.0.3 Beta
         </div>
         <br><br><br>
     </v-app>
