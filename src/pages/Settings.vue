@@ -50,6 +50,10 @@ function clearCatch() {
     localStorage.removeItem("catchSearchExpires")
     clearCatchSnk.value = true
 }
+
+function openFarsroid() {
+    location.assign('https://www.farsroid.com/vlc-for-android/#downloadbox')
+}
 </script>
 
 <template>
@@ -161,6 +165,13 @@ function clearCatch() {
                 <span>بازنشانی اطلاعات</span>
                 <v-list-item-subtitle>
                     تمام اطلاعات شما در برنامه از جمله تنظیمات، حافظه پنهان، نشان ها و... از بین می روند.
+                </v-list-item-subtitle>
+            </v-list-item>
+            <v-divider/>
+            <v-list-item class="py-0" @click.stop="openFarsroid">
+                <span>دانلود پخش کننده VLC</span>
+                <v-list-item-subtitle>
+                    برای مشاهده آنلاین فیلم ها پخش کننده VLC را نصب و از گزینه «مشاهده با VLC» در صفحه «دانلود» استفاده کنید
                 </v-list-item-subtitle>
             </v-list-item>
             <v-divider/>
