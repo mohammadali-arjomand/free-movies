@@ -87,11 +87,15 @@ avg = `${avg}`.substring(0, 3)
                         میانگین امتیاز:
                         <span style="color: #536DFE">{{ avg }}</span>
                     </div>
-                    <div style="font-size: 13px">
+                    <div v-if="collection.content.length > 1" style="font-size: 13px">
                         بازه تولید: از
                         <span style="color: #536DFE">{{ firstYear }}</span>
                         تا
                         <span style="color: #536DFE">{{ lastYear }}</span>
+                    </div>
+                    <div v-else style="font-size: 13px">
+                        بازه تولید:
+                        <span style="color: #536DFE">{{ firstYear }}</span>
                     </div>
                     <div class="countries">
                         <div v-for="country of countries">{{ country }}</div>
