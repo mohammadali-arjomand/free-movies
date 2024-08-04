@@ -74,6 +74,10 @@ import router from "@/router";
         copySuccessSnk.value = true
     }
 
+    function shareEpisodeUrlBtn(url) {
+        navigator.share({url})
+    }
+
     const addBookmarkSnk = ref(false)
     const rmBookmarkSnk = ref(false)
     const checkBookmark = () => {
@@ -168,7 +172,7 @@ import router from "@/router";
         <v-snackbar v-model="addBookmarkSnk" :timeout="1000" color="indigo-accent-2">به لیست «نشان ها» اضافه شد!</v-snackbar>
         <v-snackbar v-model="rmBookmarkSnk" :timeout="1000" color="indigo-accent-2">از لیست «نشان ها» حذف شد!</v-snackbar>
         <v-dialog v-model="showImage">
-            <VImg :src="movie.image" class="rounded" />
+            <v-img :src="movie.image" class="rounded" />
         </v-dialog>
         <v-dialog v-model="downloadDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
             <v-toolbar color="black">
@@ -197,14 +201,18 @@ import router from "@/router";
                                                     <v-list>
                                                         <v-list-item>
                                                             <v-list-item-title class="py-2">
-                                                                <a :href="'vlc://' + source.url">
+                                                                <a :href="'vlc://' + source.url" @click.prevent="alert('hi')">
                                                                     <v-icon size="small">mdi-vlc</v-icon>
                                                                     مشاهده با VLC
                                                                 </a>
                                                             </v-list-item-title>
                                                             <v-list-item-title class="py-2" @click="copyUrlBtn(source.url)">
-                                                                    <v-icon size="small">mdi-content-copy</v-icon>
-                                                                    کپی لینک
+                                                                <v-icon size="small">mdi-content-copy</v-icon>
+                                                                کپی لینک
+                                                            </v-list-item-title>
+                                                            <v-list-item-title class="py-2" @click="shareEpisodeUrlBtn(source.url)">
+                                                                <v-icon size="small">mdi-share-variant-outline</v-icon>
+                                                                اشتراک گذاری
                                                             </v-list-item-title>
                                                         </v-list-item>
                                                     </v-list>
@@ -279,22 +287,14 @@ import router from "@/router";
             <v-btn density="comfortable" icon="mdi-share-variant-outline" class="bg-indigo-accent-2 mr-3" @click.stop="shareMovie"></v-btn>
             <v-btn density="comfortable" icon="mdi-bookmark-box-multiple-outline" class="bg-indigo-accent-2 mr-3" @click.stop="collectionDlg = true"></v-btn>
         </div>
-        <div class="cover">
-            <v-img :src="movie.cover" @click="showImage = true"></v-img>
+        <div class="cover" :style="'background-image: url('+movie.cover+')'">
             <div class="content">
                 <v-row>
-                    <v-col cols="5" md="3" lg="2">
-                        <v-img :src="movie.image" class="rounded" @click="showImage = true"></v-img>
+                    <v-col cols="5" md="3" lg="2" class="position-relative">
+                        <img :src="movie.image" class="rounded position-absolute" style="bottom: 12px; width: 90%" @click="showImage = true">
                     </v-col>
                     <v-col cols="7" md="9" lg="10">
                         <h1>{{ movie.title }}</h1>
-                        <p>{{ movie.title }}</p>
-                        <div class="icon"><v-icon color="indigo-accent-2">mdi-star</v-icon> {{ movie.imdb }}</div>
-                        <div class="star"><v-icon color="indigo-accent-2">mdi-calendar-month</v-icon> {{ movie.year }}</div>
-                        <div class="genres">
-                            <div v-for="genre of movie.genres">{{ genre.title }}</div>
-                        </div>
-
                     </v-col>
                 </v-row>
             </div>
@@ -304,11 +304,39 @@ import router from "@/router";
                 ویدیوی موردنظر شما پیدا نشد
             </p>
             <div v-else>
-                <v-btn class="download-btn mb-5" color="indigo-accent-2" @click="downloadDlg = true">
-                    <v-icon>mdi-download</v-icon>
-                    <span>لینک های دانلود</span>
-                </v-btn>
-                <pre>{{ movie.description }}</pre>
+                <div class="genres mt-4">
+                    <div v-for="genre of movie.genres">{{ genre.title }}</div>
+                </div>
+                <v-list style="border-radius: 10px; border: solid 2px #7992FF;" class="bg-indigo-accent-2 my-4">
+                    <v-list-item>
+                        <v-row>
+                            <v-col cols="4" class="d-flex flex-column justify-center align-center py-5">
+                                <v-icon class="mb-5" size="large">mdi-creation</v-icon>
+                                امتیاز:
+                                {{ movie.imdb }}
+                            </v-col>
+                            <v-divider vertical></v-divider>
+                            <v-col cols="4" class="d-flex flex-column justify-center align-center py-5">
+                                <v-icon class="mb-5" size="large">mdi-calendar-clock</v-icon>
+                                سال:
+                                {{ movie.year }}
+                            </v-col>
+                            <v-divider vertical></v-divider>
+                            <v-col cols="4"  class="d-flex flex-column justify-center align-center py-5">
+                                <v-icon class="mb-5" size="large">mdi-map-marker-multiple-outline</v-icon>
+                                سازنده:
+                                {{ movie.country[0].title }}
+                            </v-col>
+                        </v-row>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item @click="downloadDlg = true" class="d-flex justify-center align-center mt-2">
+                        <v-icon class="mb-1" size="large">mdi-cloud-download</v-icon>
+                        لینک های دانلود
+                    </v-list-item>
+                </v-list>
+                <pre class="mb-4">{{ movie.description }}</pre>
+                <v-divider></v-divider>
             </div>
         </v-container>
     </v-app>
@@ -326,14 +354,11 @@ import router from "@/router";
         display: inline-block;
         margin: 12px 0;
     }
-    .download-btn {
-        margin: 0.5rem 0;
-        width: 100%;
-        letter-spacing: 0;
-        height: 50px;
-        border-radius: 500px;
-    }
     .cover {
+        min-height: 300px;
+        max-height: 400px;
+        background-size: cover;
+        background-position: center center;
         position: relative;
         .content {
             color: white;
