@@ -10,6 +10,7 @@
             case "/": return 0
             case "/search": return 1
             case "/collections":
+            case "/collections/show":
             case "/bookmarks": return 2
             case "/settings": return 3
         }

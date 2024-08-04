@@ -19,8 +19,6 @@ const collections = ref(localStorage.collections !== undefined ? JSON.parse(loca
 const isEmpty = collections.value.length === 0
 const newCollectionDlg = ref(false)
 const newCollectionMdl = ref("")
-const openCollection = ref({})
-const showCollectionDlg = ref(false)
 const reversedCollections = collections.value.reverse()
 function newCollection() {
     collections.value.push({
@@ -31,9 +29,9 @@ function newCollection() {
     location.reload()
 }
 
-function openCollectionEvent(clt) {
-    openCollection.value = clt
-    showCollectionDlg.value = true
+function openCollectionEvent(collection) {
+    localStorage.collection = JSON.stringify(collection)
+    router.push('/collections/show')
 }
 
 </script>
@@ -41,26 +39,6 @@ function openCollectionEvent(clt) {
 <template>
 
 <v-app>
-    <v-dialog v-model="showCollectionDlg" fullscreen :scrim="false" transition="dialog-bottom-transition">
-        <v-toolbar color="black">
-            <v-btn icon @click.stop="showCollectionDlg = false" variant="text"><v-icon>mdi-close</v-icon></v-btn>
-            <v-toolbar-title>{{ openCollection.title }}</v-toolbar-title>
-        </v-toolbar>
-        <div class="full-height bg-black overflow-x-auto">
-            <v-expansion-panels color="black" class="full-height">
-                <v-container>
-                    <v-row>
-                        <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of openCollection.content.reverse()">
-                            <movie-card :movie="movie"></movie-card>
-                        </v-col>
-                        <p class="msg" v-if="openCollection.content.length === 0">
-                            این مجموعه خالی است
-                        </p>
-                    </v-row>
-                </v-container>
-            </v-expansion-panels>
-        </div>
-    </v-dialog>
     <v-dialog v-model="newCollectionDlg">
         <v-card title="مجموعه جدید">
             <v-card-text>

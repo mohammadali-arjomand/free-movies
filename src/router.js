@@ -11,12 +11,14 @@ import Settings from "@/pages/Settings.vue";
 import Bookmarks from "@/pages/Bookmarks.vue";
 import Open from "@/pages/Open.vue";
 import Collections from "@/pages/Collections.vue";
+import CollectionShow from "@/pages/CollectionShow.vue";
 
 const routes = [
     { path: "/", component: Home },
     { path: "/movie", component: Movie },
     { path: "/bookmarks", component: Bookmarks },
     { path: "/collections", component: Collections },
+    { path: "/collections/show", component: CollectionShow },
     { path: "/settings", component: Settings },
     { path: "/search", component: Search },
     { path: "/search/:query", component: Result },
