@@ -19,7 +19,7 @@ const collections = ref(localStorage.collections !== undefined ? JSON.parse(loca
 const isEmpty = collections.value.length === 0
 const newCollectionDlg = ref(false)
 const newCollectionMdl = ref("")
-const openCollection = ref()
+const openCollection = ref({})
 const showCollectionDlg = ref(false)
 const reversedCollections = collections.value.reverse()
 function newCollection() {
@@ -31,6 +31,10 @@ function newCollection() {
     location.reload()
 }
 
+function openCollectionEvent(clt) {
+    openCollection.value = clt
+    showCollectionDlg.value = true
+}
 
 </script>
 
@@ -86,7 +90,7 @@ function newCollection() {
     </v-list>
 
         <v-row>
-            <v-col cols="12" sm="6" md="6" lg="3" v-for="(collection, i) of reversedCollections" @click="openCollection = collection; showCollectionDlg=true">
+            <v-col cols="12" sm="6" md="6" lg="3" v-for="(collection, i) of reversedCollections" @click="openCollectionEvent(collection)">
                 <collection-card :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
             </v-col>
         </v-row>
