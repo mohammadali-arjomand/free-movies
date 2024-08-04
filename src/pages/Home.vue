@@ -6,8 +6,8 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
     import MovieCard from "@/components/MovieCard.vue";
 
     const date = new Date;
-    if (+(localStorage.catchExpires) < date.getTime()) {
-        localStorage.removeItem("catch");
+    if (+(localStorage.cacheExpires) < date.getTime()) {
+        localStorage.removeItem("cache");
     }
 
     function openMovie(movie) {
@@ -19,7 +19,7 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
     const offline = ref(false)
 
     let movies = []
-    if (localStorage.catch === undefined) {
+    if (localStorage.cache === undefined) {
 
         fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('http://winbedrives.com/api/movie/by/filtres/0/created/0/4F5A9C3D9A86FA54EACEDDD635185')}`)
             .then(response => {
@@ -30,8 +30,8 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
                     loaded.value = true;
 
                     const date = new Date;
-                    localStorage.setItem("catch", JSON.stringify(movies))
-                    localStorage.setItem("catchExpires", (date.getTime() + 24 * 60 * 60 * 1000).toString())
+                    localStorage.setItem("cache", JSON.stringify(movies))
+                    localStorage.setItem("cacheExpires", (date.getTime() + 24 * 60 * 60 * 1000).toString())
                 }
             )
             .catch(error => {
@@ -39,7 +39,7 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
             })
     }
     else {
-        movies = JSON.parse(localStorage.catch)
+        movies = JSON.parse(localStorage.cache)
         loaded.value = true
     }
 

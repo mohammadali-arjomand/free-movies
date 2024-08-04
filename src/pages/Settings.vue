@@ -18,8 +18,8 @@ const showGenres = ref(localStorage.settingsShowGenres === undefined ? true : ev
 const clearConfirmDlg = ref(false)
 const clearConfirmSnk = ref(false)
 const resetDataDlg = ref(false)
-const clearCatchDlg = ref(false)
-const clearCatchSnk = ref(false)
+const clearCacheDlg = ref(false)
+const clearCacheSnk = ref(false)
 const contact = ref(false)
 
 watch(autoEnter, () => {
@@ -42,13 +42,13 @@ function resetData() {
     window.location.assign("/")
 }
 
-function clearCatch() {
-    clearCatchDlg.value = false
-    localStorage.removeItem("catch")
-    localStorage.removeItem("catchExpires")
-    localStorage.removeItem("catchSearch")
-    localStorage.removeItem("catchSearchExpires")
-    clearCatchSnk.value = true
+function clearCache() {
+    clearCacheDlg.value = false
+    localStorage.removeItem("cache")
+    localStorage.removeItem("cacheExpires")
+    localStorage.removeItem("cacheSearch")
+    localStorage.removeItem("cacheSearchExpires")
+    clearCacheSnk.value = true
 }
 
 function openFarsroid() {
@@ -59,7 +59,7 @@ function openFarsroid() {
 <template>
     <v-app>
         <v-snackbar v-model="clearConfirmSnk" :timeout="1000" color="indigo-accent-2">تاریخچه جستجو با موفقیت پاک شد!</v-snackbar>
-        <v-snackbar v-model="clearCatchSnk" :timeout="1000" color="indigo-accent-2">حافظه پنهان با موفقیت پاک شد!</v-snackbar>
+        <v-snackbar v-model="clearCacheSnk" :timeout="1000" color="indigo-accent-2">حافظه پنهان با موفقیت پاک شد!</v-snackbar>
         <v-dialog v-model="clearConfirmDlg">
             <v-card title="فری مووی">
                 <v-card-text>
@@ -72,15 +72,15 @@ function openFarsroid() {
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <v-dialog v-model="clearCatchDlg">
+        <v-dialog v-model="clearCacheDlg">
             <v-card title="فری مووی">
                 <v-card-text>
                     آیا میخواهید حافظه پنهان را پاک کنید؟
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text="بله" class="letter" color="red" @click="clearCatch"></v-btn>
-                    <v-btn text="خیر" class="letter" @click="clearCatchDlg = false"></v-btn>
+                    <v-btn text="بله" class="letter" color="red" @click="clearCache"></v-btn>
+                    <v-btn text="خیر" class="letter" @click="clearCacheDlg = false"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -155,7 +155,7 @@ function openFarsroid() {
                     تاریخچه جستجوهای شما به طور کامل پاک می شوند و دیگر در دسترس نیستند.
                 </v-list-item-subtitle>
             </v-list-item>
-            <v-list-item class="py-0" @click="clearCatchDlg = true">
+            <v-list-item class="py-0" @click="clearCacheDlg = true">
                 <span>پاکسازی حافظه پنهان</span>
                 <v-list-item-subtitle>
                     فری مووی برای افزایش سرعت و بهینه شدن از حافظه پنهان (کش) استفاده میکند. میتوانید این حافظه پنهان را حذف کنید.

@@ -7,8 +7,8 @@ import MovieCard from "@/components/MovieCard.vue";
 import router from "@/router";
 
 const date = new Date;
-if (+(localStorage.catchSearchExpires) < date.getTime()) {
-    localStorage.removeItem("catchSearch");
+if (+(localStorage.cacheSearchExpires) < date.getTime()) {
+    localStorage.removeItem("cacheSearch");
 }
 
 const query = useRoute().params.query;
@@ -29,7 +29,7 @@ watch(found, () => {
     }
 })
 
-if (localStorage.catchSearch === undefined || JSON.parse(localStorage.catchSearch).text !== query)
+if (localStorage.cacheSearch === undefined || JSON.parse(localStorage.cacheSearch).text !== query)
     fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${query}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
         .then(response => {
             if (response.ok) return response.json()
@@ -39,8 +39,8 @@ if (localStorage.catchSearch === undefined || JSON.parse(localStorage.catchSearc
                 found.value = true;
 
                 const date = new Date;
-                localStorage.setItem("catchSearch", JSON.stringify( { text: query, result: movies } ))
-                localStorage.setItem("catchSearchExpires", (date.getTime() + 30 * 60 * 1000).toString())
+                localStorage.setItem("cacheSearch", JSON.stringify( { text: query, result: movies } ))
+                localStorage.setItem("cacheSearchExpires", (date.getTime() + 30 * 60 * 1000).toString())
             }
         )
         .catch(error => {
@@ -48,7 +48,7 @@ if (localStorage.catchSearch === undefined || JSON.parse(localStorage.catchSearc
             // localStorage.removeItem("catchSearch")
         })
 else {
-    movies = JSON.parse(localStorage.catchSearch).result
+    movies = JSON.parse(localStorage.cacheSearch).result
     found.value = true
 }
 
