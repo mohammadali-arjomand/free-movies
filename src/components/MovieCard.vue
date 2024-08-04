@@ -21,6 +21,7 @@ function openMovie(movie) {
                 <p>{{ movie.title }}</p>
                 <div class="icon"><v-icon color="indigo-accent-2">mdi-star</v-icon> {{ movie.imdb }}</div>
                 <div class="star"><v-icon color="indigo-accent-2">mdi-calendar-month</v-icon> {{ movie.year }}</div>
+                <!-- TODO: Complete 'showed' or not -->
                 <div class="genres" v-if="showGenres">
                     <div v-for="genre of movie.genres">{{ genre.title }}</div>
                 </div>

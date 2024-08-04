@@ -78,8 +78,8 @@ import router from "@/router";
         navigator.share({url})
     }
 
-    const addBookmarkSnk = ref(false)
-    const rmBookmarkSnk = ref(false)
+    // const addBookmarkSnk = ref(false)
+    // const rmBookmarkSnk = ref(false)
     const checkBookmark = () => {
         let isExists = false
         JSON.parse(localStorage.bookmarks).forEach(i => isExists = isExists ? true : i.id === movie.id)
@@ -91,13 +91,13 @@ import router from "@/router";
             let bookmarks = JSON.parse(localStorage.bookmarks)
             bookmarks = bookmarks.filter(value => value.id !== movie.id)
             localStorage.bookmarks = JSON.stringify(bookmarks)
-            rmBookmarkSnk.value = true
+            // rmBookmarkSnk.value = true
         }
         else {
             let bookmarks = localStorage.bookmarks === undefined ? [] : JSON.parse(localStorage.bookmarks)
             bookmarks.push(movie)
             localStorage.bookmarks = JSON.stringify(bookmarks)
-            addBookmarkSnk.value = true
+            // addBookmarkSnk.value = true
         }
         isBookmark.value = !isBookmark.value
     }
@@ -169,8 +169,8 @@ import router from "@/router";
 <template>
     <v-app>
         <v-snackbar v-model="copySuccessSnk" :timeout="1000" color="indigo-accent-2">لینک کپی شد!</v-snackbar>
-        <v-snackbar v-model="addBookmarkSnk" :timeout="1000" color="indigo-accent-2">به لیست «نشان ها» اضافه شد!</v-snackbar>
-        <v-snackbar v-model="rmBookmarkSnk" :timeout="1000" color="indigo-accent-2">از لیست «نشان ها» حذف شد!</v-snackbar>
+<!--        <v-snackbar v-model="addBookmarkSnk" :timeout="1000" color="indigo-accent-2">به لیست «نشان ها» اضافه شد!</v-snackbar>-->
+<!--        <v-snackbar v-model="rmBookmarkSnk" :timeout="1000" color="indigo-accent-2">از لیست «نشان ها» حذف شد!</v-snackbar>-->
         <v-dialog v-model="showImage">
             <v-img :src="movie.image" class="rounded" />
         </v-dialog>
