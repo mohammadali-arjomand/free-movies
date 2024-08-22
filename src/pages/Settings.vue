@@ -14,6 +14,7 @@ import AppBar from "@/components/AppBar.vue";
 
 const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eval(localStorage.settingsAutoEnter))
 const showGenres = ref(localStorage.settingsShowGenres === undefined ? true : eval(localStorage.settingsShowGenres))
+const showPinnedBookmarks = ref(localStorage.settingsShowPinnedBookmarks === undefined ? true : eval(localStorage.settingsShowPinnedBookmarks))
 const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false : eval(localStorage.settingsBottomSpace))
 
 const clearConfirmDlg = ref(false)
@@ -29,6 +30,10 @@ watch(autoEnter, () => {
 
 watch(showGenres, () => {
     localStorage.settingsShowGenres = showGenres.value;
+})
+
+watch(showPinnedBookmarks, () => {
+    localStorage.settingsShowPinnedBookmarks = showPinnedBookmarks.value;
 })
 
 watch(bottomSpace, () => {
@@ -152,6 +157,15 @@ function openFarsroid() {
                 </span>
                 <v-list-item-subtitle>
                     اگر غیرفعال شود، لیست ژانرها از زیر کارت فیلم ها حذف خواهد شد.
+                </v-list-item-subtitle>
+            </v-list-item>
+            <v-list-item class="py-0">
+                <span>
+                    نشان های سنجاق شده
+                    <v-switch v-model="showPinnedBookmarks" class="float-left ml-3" color="indigo-accent-2" />
+                </span>
+                <v-list-item-subtitle>
+                    با فعال کردن این گزینه، نشان های سنجاق شده در صفحه مجموعه ها نمایش داده میشوند
                 </v-list-item-subtitle>
             </v-list-item>
             <v-list-item class="py-0">

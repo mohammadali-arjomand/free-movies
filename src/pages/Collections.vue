@@ -14,11 +14,19 @@ import CollectionCard from "@/components/CollectionCard.vue";
 import {ref} from "vue";
 import MovieCard from "@/components/MovieCard.vue";
 import router from "@/router";
+import HorizontalMovieCard from "@/components/HorizontalMovieCard.vue";
 
 const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false : eval(localStorage.settingsBottomSpace))
 
 const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
+const showPinnedBookmarks = ref(localStorage.settingsShowPinnedBookmarks === undefined ? true : eval(localStorage.settingsShowPinnedBookmarks))
 const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage.bookmarks).reverse() : []
+const pinnedBookmarks = ref(localStorage.pinnedBookmarks !== undefined ? JSON.parse(localStorage.pinnedBookmarks).reverse() : [])
+const pinnedBookmarkMovies = ref([])
+for (let movie of bookmarks) {
+    if (pinnedBookmarks.value.includes(movie.id))
+        pinnedBookmarkMovies.value.push(movie)
+}
 
 function didPin() {
     let isPin = false
@@ -74,6 +82,13 @@ function openCollectionEvent(collection) {
         <v-list-item @click="router.push('/bookmarks')">
             نشان ها
             <v-icon style="float: left">mdi-arrow-left</v-icon>
+        </v-list-item>
+        <v-list-item v-if="showPinnedBookmarks && pinnedBookmarks.length > 0">
+            <v-row class="flex-nowrap overflow-x-auto">
+                <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of pinnedBookmarkMovies">
+                    <horizontal-movie-card :movie="movie"></horizontal-movie-card>
+                </v-col>
+            </v-row>
         </v-list-item>
     </v-list>
 
