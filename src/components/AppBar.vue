@@ -1,9 +1,11 @@
 <script setup>
-    import {VAppBar, VIcon} from "vuetify/components";
-    import {ref} from "vue";
-    import router from "@/router";
+import {VAppBar, VIcon} from "vuetify/components";
+import {ref} from "vue";
+import router from "@/router";
 
-    const nav = ref(setNav())
+const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false : eval(localStorage.settingsBottomSpace))
+
+const nav = ref(setNav())
 
     function setNav() {
         switch (router.currentRoute._value.fullPath) {
@@ -23,7 +25,7 @@
         <img src="@/assets/typo.png" class="typo" alt="Typography">
     </v-app-bar>
 
-    <v-bottom-navigation v-model="nav" bg-color="black" color="indigo-accent-2" grow active>
+    <v-bottom-navigation v-model="nav" bg-color="black" :class="bottomSpace ? 'mb-6' : ''" color="indigo-accent-2" grow active>
         <v-btn @click.stop="router.push('/'); nav =0">
             <v-icon>mdi-home-outline</v-icon>
 
@@ -48,9 +50,20 @@
             <span class="navigation-item">تنظیمات</span>
         </v-btn>
     </v-bottom-navigation>
+
+    <div v-if="bottomSpace" class="bottom-space"></div>
 </template>
 
 <style scoped>
+.bottom-space {
+    height: 24px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    z-index: 999999999999999999;
+}
 .navigation-item {
     letter-spacing: 0;
 }

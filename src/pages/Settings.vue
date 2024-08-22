@@ -14,6 +14,7 @@ import AppBar from "@/components/AppBar.vue";
 
 const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eval(localStorage.settingsAutoEnter))
 const showGenres = ref(localStorage.settingsShowGenres === undefined ? true : eval(localStorage.settingsShowGenres))
+const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false : eval(localStorage.settingsBottomSpace))
 
 const clearConfirmDlg = ref(false)
 const clearConfirmSnk = ref(false)
@@ -28,6 +29,11 @@ watch(autoEnter, () => {
 
 watch(showGenres, () => {
     localStorage.settingsShowGenres = showGenres.value;
+})
+
+watch(bottomSpace, () => {
+    localStorage.settingsBottomSpace = bottomSpace.value;
+    location.reload()
 })
 
 function clearSearchHistory() {
@@ -128,7 +134,7 @@ function openFarsroid() {
         <app-bar></app-bar>
 
 
-        <v-list class="mt-14 pt-6 h-100 bg-black" color="surface" lines="three">
+        <v-list class="mt-14 pt-6 h-100 bg-black" color="surface" lines="two">
 
             <v-list-item class="py-0">
                 <span>
@@ -146,6 +152,15 @@ function openFarsroid() {
                 </span>
                 <v-list-item-subtitle>
                     اگر غیرفعال شود، لیست ژانرها از زیر کارت فیلم ها حذف خواهد شد.
+                </v-list-item-subtitle>
+            </v-list-item>
+            <v-list-item class="py-0">
+                <span>
+                    فاصله از پایین
+                    <v-switch v-model="bottomSpace" class="float-left ml-3" color="indigo-accent-2" />
+                </span>
+                <v-list-item-subtitle>
+                    اگر در دستگاه شما منوی پایین کامل نمایش داده نمیشود، این گزینه را فعال نمایید
                 </v-list-item-subtitle>
             </v-list-item>
             <v-divider/>
@@ -183,8 +198,8 @@ function openFarsroid() {
             </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <div class="text-center mt-3" onclick="alert('نسخه 5.0.3 آزمایشی')">
-            v5.0.3 Beta
+        <div class="text-center mt-3" onclick="alert('نسخه 5.1.3 آزمایشی')">
+            v5.1.3 Beta
         </div>
         <br><br><br>
     </v-app>
