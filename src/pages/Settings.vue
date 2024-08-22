@@ -134,7 +134,7 @@ function openFarsroid() {
         <app-bar></app-bar>
 
 
-        <v-list class="mt-14 pt-6 h-100 bg-black" color="surface" lines="two">
+        <v-list class="mt-14 pt-6 h-100 bg-black" color="surface" lines="three">
 
             <v-list-item class="py-0">
                 <span>
