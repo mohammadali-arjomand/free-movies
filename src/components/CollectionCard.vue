@@ -6,10 +6,21 @@ const props = defineProps(["collection", "id"])
 import ph from '@/assets/placeholder/poster-placeholder.png'
 import {ref} from "vue";
 
+const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
+function pinCollection() {
+    collections.value[props.id].pinned = true
+    localStorage.collections = JSON.stringify(collections.value)
+    location.reload()
+}
+function unpinCollection() {
+    collections.value[props.id].pinned = false
+    localStorage.collections = JSON.stringify(collections.value)
+    location.reload()
+}
+
 const removeConfirm = ref(false)
 const editCollectionDlg = ref(false)
 const editCollectionMdl = ref(props.collection.title)
-const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
 function removeCollection() {
     collections.value.splice(props.id, 1)
     localStorage.collections = JSON.stringify(collections.value)
@@ -109,8 +120,16 @@ avg = `${avg}`.substring(0, 3)
                         <v-menu activator="parent">
                             <v-list>
                                 <v-list-item>
+                                    <v-list-item-title v-if="collection.pinned !== true" class="py-2" @click.stop="pinCollection">
+                                        <v-icon size="small">mdi-pin-outline</v-icon>
+                                        سنجاق کردن
+                                    </v-list-item-title>
+                                    <v-list-item-title v-else class="py-2" @click.stop="unpinCollection">
+                                        <v-icon size="small">mdi-pin</v-icon>
+                                        حذف سنجاق
+                                    </v-list-item-title>
                                     <v-list-item-title class="py-2" @click.stop="editCollectionDlg = true">
-                                        <v-icon size="small">mdi-pencil</v-icon>
+                                        <v-icon size="small">mdi-pencil-outline</v-icon>
                                         ویرایش نام
                                     </v-list-item-title>
                                     <v-list-item-title class="py-2 text-red" @click.stop="removeConfirm = true">

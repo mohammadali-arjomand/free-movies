@@ -20,6 +20,12 @@ const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false :
 const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
 const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage.bookmarks).reverse() : []
 
+function didPin() {
+    let isPin = false
+    JSON.parse(localStorage.collections).forEach(i => isPin = isPin ? true : i.pinned === true)
+    return isPin
+}
+
 const isEmpty = collections.value.length === 0
 const newCollectionDlg = ref(false)
 const newCollectionMdl = ref("")
@@ -72,8 +78,12 @@ function openCollectionEvent(collection) {
     </v-list>
 
         <v-row>
+            <v-col v-if="didPin()" cols="12" sm="6" md="6" lg="3" v-for="(collection, i) of reversedCollections" @click="openCollectionEvent(collection)">
+                <collection-card v-if="collection.pinned === true" :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
+            </v-col>
+            <v-divider v-if="didPin()"></v-divider>
             <v-col cols="12" sm="6" md="6" lg="3" v-for="(collection, i) of reversedCollections" @click="openCollectionEvent(collection)">
-                <collection-card :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
+                <collection-card v-if="collection.pinned !== true" :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
             </v-col>
         </v-row>
         <p v-if="isEmpty" class="mt-4 d-flex justify-center align-center h-100 text-center">
