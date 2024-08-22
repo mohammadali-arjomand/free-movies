@@ -18,10 +18,10 @@ const collection = localStorage.collection !== undefined ? JSON.parse(localStora
                 <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of collection.content.reverse()">
                     <movie-card :movie="movie"></movie-card>
                 </v-col>
-                <p class="msg" v-if="collection.content.length === 0">
-                    این مجموعه خالی است
-                </p>
             </v-row>
+            <p class="msg" v-if="collection.content.length === 0">
+                این مجموعه خالی است!
+            </p>
         </v-container>
         <br><br><br>
     </v-app>
@@ -29,5 +29,8 @@ const collection = localStorage.collection !== undefined ? JSON.parse(localStora
 </template>
 
 <style scoped>
-
+.msg {
+    text-align: center;
+    margin-top: 150px;
+}
 </style>
