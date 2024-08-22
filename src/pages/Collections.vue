@@ -15,7 +15,11 @@ import {ref} from "vue";
 import MovieCard from "@/components/MovieCard.vue";
 import router from "@/router";
 
+const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false : eval(localStorage.settingsBottomSpace))
+
 const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
+const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage.bookmarks).reverse() : []
+
 const isEmpty = collections.value.length === 0
 const newCollectionDlg = ref(false)
 const newCollectionMdl = ref("")
@@ -60,7 +64,7 @@ function openCollectionEvent(collection) {
     </v-dialog>
     <app-bar></app-bar>
     <v-container class="bg-black mt-14 h-100">
-    <v-list style="border-radius: 10px; border: solid 2px #333">
+    <v-list v-if="bookmarks.length > 0" style="border-radius: 10px; border: solid 2px #333">
         <v-list-item @click="router.push('/bookmarks')">
             نشان ها
             <v-icon style="float: left">mdi-arrow-left</v-icon>
@@ -80,7 +84,7 @@ function openCollectionEvent(collection) {
 
     </v-container>
     <v-col cols="auto">
-        <v-btn icon="mdi-plus" class="fixed" color="indigo-accent-2" size="large" @click="newCollectionDlg = true"></v-btn>
+        <v-btn icon="mdi-plus" class="fixed" :style="bottomSpace ? 'bottom: 104px;' : 'bottom: 80px;'" color="indigo-accent-2" size="large" @click="newCollectionDlg = true"></v-btn>
     </v-col>
     <br><br><br>
 </v-app>
@@ -97,7 +101,6 @@ function openCollectionEvent(collection) {
 .fixed {
     position: fixed;
     left: 20px;
-    bottom: 80px;
 }
 p.msg {
     width: 100vw;
