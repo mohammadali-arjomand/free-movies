@@ -1,6 +1,6 @@
 {
   "name": "free-movies",
-  "version": "4.0.0",
+  "version": "5.1.3",
   "private": true,
   "scripts": {
     "dev": "vite",
