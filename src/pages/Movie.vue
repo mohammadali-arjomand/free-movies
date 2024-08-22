@@ -324,7 +324,7 @@ import router from "@/router";
                             <v-divider vertical></v-divider>
                             <v-col cols="4"  class="d-flex flex-column justify-center align-center py-5">
                                 <v-icon class="mb-5" size="large">mdi-map-marker-multiple-outline</v-icon>
-                                سازنده:
+                                کشور:
                                 {{ movie.country[0].title }}
                             </v-col>
                         </v-row>
