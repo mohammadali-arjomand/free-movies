@@ -3,7 +3,9 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
     import AppBar from "@/components/AppBar.vue";
     import {ref} from "vue";
     import router from "@/router";
-    import MovieCard from "@/components/MovieCard.vue";
+    import HorizontalMovieCard from "@/components/HorizontalMovieCard.vue";
+
+    const bookmarks = localStorage.bookmarks !== undefined ? JSON.parse(localStorage.bookmarks).reverse() : []
 
     const date = new Date;
     if (+(localStorage.cacheExpires) < date.getTime()) {
@@ -66,11 +68,28 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
                 </div>
             </div>
             <div v-else>
-                <v-row>
-                    <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of movies">
-                        <movie-card :movie="movie"></movie-card>
+                <h2>آخرین فیلم های اضافه شده</h2>
+                <v-row class="flex-nowrap overflow-x-auto">
+                    <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of movies">
+                        <horizontal-movie-card :movie="movie"></horizontal-movie-card>
                     </v-col>
                 </v-row>
+                <br><br>
+                <h2>تازه نشان شده ها</h2>
+                <v-row class="flex-nowrap overflow-x-auto">
+                    <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of bookmarks">
+                        <horizontal-movie-card :movie="movie"></horizontal-movie-card>
+                    </v-col>
+                </v-row>
+                <br><br>
+                <h2>تازه نشان شده ها</h2>
+                <v-row class="flex-nowrap overflow-x-auto">
+                    <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of bookmarks">
+                        <horizontal-movie-card :movie="movie"></horizontal-movie-card>
+                    </v-col>
+                </v-row>
+                <br><br>
+                <p class="font-italic text-center">سایر دسته بندی ها به زودی اضافه خواهند شد...</p>
             </div>
         </v-container>
         <br><br><br>
