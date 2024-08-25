@@ -30,6 +30,8 @@ for (let movie of bookmarks) {
 
 function didPin() {
     let isPin = false
+    if (localStorage.collections === undefined)
+        return false
     JSON.parse(localStorage.collections).forEach(i => isPin = isPin ? true : i.pinned === true)
     return isPin
 }
@@ -93,13 +95,17 @@ function openCollectionEvent(collection) {
     </v-list>
 
         <v-row>
-            <v-col v-if="didPin()" cols="12" sm="6" md="6" lg="3" v-for="(collection, i) of reversedCollections" @click="openCollectionEvent(collection)">
-                <collection-card v-if="collection.pinned === true" :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
-            </v-col>
+            <template v-for="(collection, i) of reversedCollections" @click="openCollectionEvent(collection)">
+                <v-col cols="12" sm="6" md="6" lg="3" v-if="collection.pinned === true">
+                    <collection-card :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
+                </v-col>
+            </template>
             <v-divider v-if="didPin()"></v-divider>
-            <v-col cols="12" sm="6" md="6" lg="3" v-for="(collection, i) of reversedCollections" @click="openCollectionEvent(collection)">
-                <collection-card v-if="collection.pinned !== true" :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
-            </v-col>
+            <template v-for="(collection, i) of reversedCollections">
+                <v-col cols="12" sm="6" md="6" lg="3" @click="openCollectionEvent(collection)" v-if="collection.pinned !== true">
+                    <collection-card :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
+                </v-col>
+            </template>
         </v-row>
         <p v-if="isEmpty" class="mt-4 d-flex justify-center align-center h-100 text-center">
             مجموعه ای وجود ندارد!
