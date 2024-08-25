@@ -21,6 +21,14 @@ const collection = localStorage.collection !== undefined ? JSON.parse(localStora
             </v-row>
             <p class="msg" v-if="collection.content.length === 0">
                 این مجموعه خالی است!
+                <br>
+                <i>
+                    برای اضافه کردن فیلم به این مجموعه، وارد صفحه یک فیلم شوید و از بخش بالا روی گزینه
+                    <v-icon>mdi-bookmark-box-multiple-outline</v-icon>
+                    ضربه بزنید و تیک
+                    «{{ collection.title }}»
+                    را فعال کنید
+                </i>
             </p>
         </v-container>
         <br><br><br>

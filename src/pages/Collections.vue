@@ -95,8 +95,8 @@ function openCollectionEvent(collection) {
     </v-list>
 
         <v-row>
-            <template v-for="(collection, i) of reversedCollections" @click="openCollectionEvent(collection)">
-                <v-col cols="12" sm="6" md="6" lg="3" v-if="collection.pinned === true">
+            <template v-for="(collection, i) of reversedCollections">
+                <v-col cols="12" sm="6" md="6" lg="3" v-if="collection.pinned === true" @click="openCollectionEvent(collection)">
                     <collection-card :collection="collection" :id="reversedCollections.length - 1 - i"></collection-card>
                 </v-col>
             </template>
