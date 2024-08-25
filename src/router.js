@@ -31,7 +31,9 @@ const routes = [
 export default createRouter({
     history: createWebHistory(),
     scrollBehavior()  {
-        return { top: 0 }
+        document.getElementById('app').scrollIntoView();
+
+        // return { top: 0, left: 0 }
     },
     routes
 })
