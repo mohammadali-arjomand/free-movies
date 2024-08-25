@@ -83,7 +83,7 @@ function openCollectionEvent(collection) {
             نشان ها
             <v-icon style="float: left">mdi-arrow-left</v-icon>
         </v-list-item>
-        <v-list-item v-if="showPinnedBookmarks && pinnedBookmarks.length > 0">
+        <v-list-item v-if="showPinnedBookmarks && pinnedBookmarkMovies.length > 0">
             <v-row class="flex-nowrap overflow-x-auto">
                 <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of pinnedBookmarkMovies">
                     <horizontal-movie-card :movie="movie"></horizontal-movie-card>
