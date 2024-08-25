@@ -1,10 +1,12 @@
 <script setup>
 import {reactive, ref, watch} from "vue";
 import {useRoute} from "vue-router";
-import {VApp, VContainer, VRow, VCol} from "vuetify/components";
+import {VApp, VContainer, VRow, VCol, VCard, VBtn, VDialog} from "vuetify/components";
 import SearchBar from "@/components/SearchBar.vue";
 import MovieCard from "@/components/MovieCard.vue";
 import router from "@/router";
+
+const cancelDlg = ref(false)
 
 const date = new Date;
 if (+(localStorage.cacheSearchExpires) < date.getTime()) {
@@ -61,6 +63,18 @@ function refresh() {
 <template>
 
     <v-app>
+        <v-dialog v-model="cancelDlg">
+            <v-card title="فری مووی">
+                <v-card-text>
+                    آیا میخواهید جستجو را لغو کنید؟
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="بله" class="letter" color="red" @click="router.push('/search')"></v-btn>
+                    <v-btn text="خیر" class="letter" @click="cancelDlg = false"></v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-container class="h-100 bg-black">
         <div v-if="found" class="h-100">
             <div v-if="movies.length === 0" class="text-center h-100 flex-column d-flex justify-center align-center">
@@ -82,7 +96,7 @@ function refresh() {
         </div>
         <div v-else class="h-100">
                 <div v-if="!offline" class="text-center h-100 d-flex justify-center align-center">
-                    <v-progress-circular color="indigo-accent-2" indeterminate></v-progress-circular>
+                    <v-progress-circular @click="cancelDlg = true" color="indigo-accent-2" indeterminate></v-progress-circular>
                 </div>
                 <div v-else class="text-center h-100 flex-column d-flex justify-center align-center">
                     <p>خطا در اتصال به سرور</p>
