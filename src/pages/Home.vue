@@ -12,10 +12,10 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
         localStorage.removeItem("cache");
     }
 
-    function openMovie(movie) {
-        localStorage.movie = JSON.stringify(movie);
-        router.push("/movie");
-    }
+    // function openMovie(movie) {
+    //     localStorage.movie = JSON.stringify(movie);
+    //     router.push("/movie");
+    // }
 
     const loaded = ref(false)
     const offline = ref(false)
@@ -68,14 +68,20 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
                 </div>
             </div>
             <div v-else>
-                <h2>آخرین فیلم های اضافه شده</h2>
+                <h2 @click="router.push('/recently-added')">
+                    آخرین فیلم های اضافه شده
+                    <v-icon style="float: left" size="x-small">mdi-arrow-left</v-icon>
+                </h2>
                 <v-row class="flex-nowrap overflow-x-auto">
                     <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of movies">
                         <horizontal-movie-card :movie="movie"></horizontal-movie-card>
                     </v-col>
                 </v-row>
                 <br><br>
-                <h2 v-if="bookmarks.length > 0">تازه نشان شده ها</h2>
+                <h2 v-if="bookmarks.length > 0" @click="router.push('/bookmarks')">
+                    تازه نشان شده ها
+                    <v-icon style="float: left" size="x-small">mdi-arrow-left</v-icon>
+                </h2>
                 <v-row class="flex-nowrap overflow-x-auto" v-if="bookmarks.length > 0">
                     <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of bookmarks">
                         <horizontal-movie-card :movie="movie"></horizontal-movie-card>
@@ -92,6 +98,10 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
 </template>
 
 <style scoped>
+h2 {
+    letter-spacing: 0;
+    font-weight: normal;
+}
 .letter {
     letter-spacing: 0;
 }

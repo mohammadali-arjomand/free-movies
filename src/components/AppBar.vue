@@ -9,7 +9,8 @@ const nav = ref(setNav())
 
     function setNav() {
         switch (router.currentRoute._value.fullPath) {
-            case "/": return 0
+            case "/":
+            case "/recently-added": return 0
             case "/search": return 1
             case "/collections":
             case "/collections/show":
