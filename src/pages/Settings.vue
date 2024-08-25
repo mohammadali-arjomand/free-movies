@@ -16,6 +16,7 @@ const autoEnter = ref(localStorage.settingsAutoEnter === undefined ? false : eva
 const showGenres = ref(localStorage.settingsShowGenres === undefined ? true : eval(localStorage.settingsShowGenres))
 const showPinnedBookmarks = ref(localStorage.settingsShowPinnedBookmarks === undefined ? true : eval(localStorage.settingsShowPinnedBookmarks))
 const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false : eval(localStorage.settingsBottomSpace))
+const lastWatch = ref(localStorage.settingsLastWatch === undefined ? false : eval(localStorage.settingsLastWatch))
 
 const clearConfirmDlg = ref(false)
 const clearConfirmSnk = ref(false)
@@ -38,6 +39,10 @@ watch(showPinnedBookmarks, () => {
 
 watch(bottomSpace, () => {
     localStorage.settingsBottomSpace = bottomSpace.value;
+    location.reload()
+})
+watch(lastWatch, () => {
+    localStorage.settingsLastWatch = lastWatch.value;
     location.reload()
 })
 
@@ -175,6 +180,15 @@ function openFarsroid() {
                 </span>
                 <v-list-item-subtitle>
                     اگر در دستگاه شما منوی پایین کامل نمایش داده نمیشود، این گزینه را فعال نمایید
+                </v-list-item-subtitle>
+            </v-list-item>
+            <v-list-item class="py-0">
+                <span>
+                    آخرین مشاهده
+                    <v-switch v-model="lastWatch" class="float-left ml-3" color="indigo-accent-2" />
+                </span>
+                <v-list-item-subtitle>
+                    اگر فعال باشد آخرین فیلمی که صفحه آنرا مشاهده کردید در منوی پایین نمایش داده میشود
                 </v-list-item-subtitle>
             </v-list-item>
             <v-divider/>

@@ -4,6 +4,9 @@ import {ref} from "vue";
 import router from "@/router";
 
 const bottomSpace = ref(localStorage.settingsBottomSpace === undefined ? false : eval(localStorage.settingsBottomSpace))
+const lastWatch = ref(localStorage.settingsLastWatch === undefined ? false : eval(localStorage.settingsLastWatch))
+
+const movie = localStorage.movie !== undefined ? JSON.parse(localStorage.movie) : null
 
 const nav = ref(setNav())
 
@@ -27,6 +30,8 @@ const nav = ref(setNav())
     </v-app-bar>
 
     <v-bottom-navigation v-model="nav" bg-color="black" :class="bottomSpace ? 'mb-6' : ''" color="indigo-accent-2" grow active>
+        <img v-if="movie !== null && lastWatch" :src="movie.image" alt="POSTER" @click="router.push('/movie')">
+
         <v-btn @click.stop="router.push('/'); nav =0">
             <v-icon>mdi-home-outline</v-icon>
 
