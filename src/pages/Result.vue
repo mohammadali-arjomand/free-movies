@@ -61,15 +61,16 @@ function refresh() {
 <template>
 
     <v-app>
-        <div v-if="found">
+        <v-container class="h-100 bg-black">
+        <div v-if="found" class="h-100">
             <div v-if="movies.length === 0" class="text-center h-100 flex-column d-flex justify-center align-center">
                 <p>همچین عنوانی پیدا نشد!</p>
-                <v-btn class="letter rounded-pill mt-3" color="indigo-accent-2" @click.stop="refresh">
-                    <v-icon class="ml-1">mdi-reload</v-icon>
-                    تلاش مجدد
+                <v-btn class="letter rounded-pill mt-3" color="indigo-accent-2" @click.stop="router.back()">
+                    <v-icon class="ml-1">mdi-arrow-right</v-icon>
+                    بازگشت
                 </v-btn>
             </div>
-            <v-container v-else class="bg-black">
+            <div v-else class="bg-black">
                 <search-bar :value="query" :close-btn="true" :refresh="true"></search-bar>
                 <v-row>
                     <v-col cols="12" sm="6" md="6" lg="3" v-for="movie of movies">
@@ -77,10 +78,9 @@ function refresh() {
                     </v-col>
                 </v-row>
                 <br>
-            </v-container>
+            </div>
         </div>
         <div v-else class="h-100">
-            <v-container class="bg-black h-100">
                 <div v-if="!offline" class="text-center h-100 d-flex justify-center align-center">
                     <v-progress-circular color="indigo-accent-2" indeterminate></v-progress-circular>
                 </div>
@@ -91,8 +91,8 @@ function refresh() {
                         تلاش مجدد
                     </v-btn>
                 </div>
-            </v-container>
         </div>
+        </v-container>
     </v-app>
 
 </template>
