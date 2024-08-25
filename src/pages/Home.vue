@@ -75,20 +75,15 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
                     </v-col>
                 </v-row>
                 <br><br>
-                <h2>تازه نشان شده ها</h2>
-                <v-row class="flex-nowrap overflow-x-auto">
+                <h2 v-if="bookmarks.length > 0">تازه نشان شده ها</h2>
+                <v-row class="flex-nowrap overflow-x-auto" v-if="bookmarks.length > 0">
                     <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of bookmarks">
                         <horizontal-movie-card :movie="movie"></horizontal-movie-card>
                     </v-col>
                 </v-row>
-                <br><br>
-                <h2>تازه نشان شده ها</h2>
-                <v-row class="flex-nowrap overflow-x-auto">
-                    <v-col cols="5" sm="6" md="6" lg="3" v-for="movie of bookmarks">
-                        <horizontal-movie-card :movie="movie"></horizontal-movie-card>
-                    </v-col>
-                </v-row>
-                <br><br>
+                <template v-if="bookmarks.length > 0">
+                    <br><br>
+                </template>
                 <p class="font-italic text-center">سایر دسته بندی ها به زودی اضافه خواهند شد...</p>
             </div>
         </v-container>
