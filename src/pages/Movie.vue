@@ -22,7 +22,7 @@ import router from "@/router";
     const collectionDlg = ref(false)
     const newCollectionDlg = ref(false)
     const copySuccessSnk = ref(false)
-
+    
     const newCollectionMdl = ref("")
 
     const collections = ref(localStorage.collections !== undefined ? JSON.parse(localStorage.collections) : [])
@@ -128,38 +128,43 @@ import router from "@/router";
 
     const showImage = ref(false)
     const offline = ref(false)
+    const movieCountry = ref("...")
+    const movieDescription = ref("در حال بارگذاری...")
 
     const loaded = ref(true)
     const seasons = ref([])
-    if (movie.type === "movie") {
-        seasons.value = [
-            {
-                title: movie.title,
-                episodes: [
-                    {
-                        title: "دانلود",
-                        sources: movie.sources
-                    }
-                ]
-            }
-        ]
-    }
-    else {
-        loaded.value = false
-        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`http://winbedrives.com/api/season/by/serie/${movie.id}/4F5A9C3D9A86FA54EACEDDD63518`)}`)
-            .then(response => {
-                if (response.ok) return response.json()
-                throw new Error('Network response was not ok.')
-            })
-            .then(data => {
-                    seasons.value = JSON.parse(data.contents)
-                    loaded.value = true
+
+    loaded.value = false
+    fetch(`https://freemovie.arjomand-dev.workers.dev/movie?id=${movie.id}`)
+        .then(response => {
+            if (response.ok) return response.json()
+            throw new Error('Network response was not ok.')
+        })
+        .then(data => {
+                if (movie.type == "movie") {
+                    seasons.value = [
+                        {
+                            title: movie.title,
+                            episodes: [
+                                {
+                                    title: "دانلود",
+                                    sources: data.sources
+                                }
+                            ]
+                        }
+                    ]
                 }
-            )
-            .catch(error => {
-                offline.value = true
-            })
-    }
+                else {
+                    seasons.value = data
+                }
+                movieCountry.value = data.country.length > 0 ? data.country[0].title : "نامشخص"
+                movieDescription.value = data.description
+                loaded.value = true
+            }
+        )
+        .catch(error => {
+            offline.value = true
+        })
 
     function refresh() {
         location.reload()
@@ -322,7 +327,7 @@ import router from "@/router";
                             <v-divider vertical></v-divider>
                             <v-col cols="4"  class="d-flex flex-column justify-center align-center py-5">
                                 <v-icon class="mb-5" size="large">mdi-map-marker-multiple-outline</v-icon>
-                                {{ movie.country[0].title }}
+                                {{ movieCountry }}
                             </v-col>
                         </v-row>
                     </v-list-item>
@@ -332,7 +337,7 @@ import router from "@/router";
                         لینک های دانلود
                     </v-list-item>
                 </v-list>
-                <pre class="mb-4">{{ movie.description }}</pre>
+                <pre class="mb-4">{{ movieDescription }}</pre>
                 <v-divider></v-divider>
             </div>
         </v-container>
