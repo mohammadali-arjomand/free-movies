@@ -23,12 +23,11 @@ import {VApp, VContainer, VCol, VRow} from "vuetify/components";
     let movies = []
     if (localStorage.cache === undefined) {
 
-        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('http://winbedrives.com/api/movie/by/filtres/0/created/0/4F5A9C3D9A86FA54EACEDDD635185')}`)
+        fetch(`https://freemovie.arjomand-dev.workers.dev/latest`)
             .then(response => {
                 if (response.ok) return response.json()
             })
-            .then(data => {
-                    movies = JSON.parse(data.contents);
+            .then(movies => {
                     loaded.value = true;
 
                     const date = new Date;
