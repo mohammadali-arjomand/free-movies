@@ -227,7 +227,7 @@ function openFarsroid() {
         </v-list>
         <v-divider></v-divider>
         <div class="text-center mt-3" onclick="alert('نسخه 5.2.3 آزمایشی')">
-            v5.2.3 Beta
+            v5.2.4 Beta
         </div>
         <br><br><br>
     </v-app>
