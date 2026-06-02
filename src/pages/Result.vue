@@ -32,12 +32,11 @@ watch(found, () => {
 })
 
 if (localStorage.cacheSearch === undefined || JSON.parse(localStorage.cacheSearch).text !== query)
-    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${query}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
-        .then(response => {
+    fetch(`https://freemovie.arjomand-dev.workers.dev/search?query=${query}`)
+        .then(response => {            
             if (response.ok) return response.json()
         })
-        .then(data => {
-                movies = JSON.parse(data.contents).posters;
+        .then(movies => {              
                 found.value = true;
 
                 const date = new Date;
@@ -47,7 +46,6 @@ if (localStorage.cacheSearch === undefined || JSON.parse(localStorage.cacheSearc
         )
         .catch(error => {
             offline.value = true
-            // localStorage.removeItem("catchSearch")
         })
 else {
     movies = JSON.parse(localStorage.cacheSearch).result
