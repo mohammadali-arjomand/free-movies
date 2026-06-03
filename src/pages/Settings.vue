@@ -182,15 +182,15 @@ function openPlayStore() {
                     اگر در دستگاه شما منوی پایین کامل نمایش داده نمیشود، این گزینه را فعال نمایید
                 </v-list-item-subtitle>
             </v-list-item>
-            <v-list-item class="py-0">
-                <span>
-                    آخرین مشاهده
-                    <v-switch v-model="lastWatch" class="float-left ml-3" color="indigo-accent-2" />
-                </span>
-                <v-list-item-subtitle>
-                    اگر فعال باشد آخرین فیلمی که صفحه آنرا مشاهده کردید در منوی پایین نمایش داده میشود
-                </v-list-item-subtitle>
-            </v-list-item>
+<!--            <v-list-item class="py-0">-->
+<!--                <span>-->
+<!--                    آخرین مشاهده-->
+<!--                    <v-switch v-model="lastWatch" class="float-left ml-3" color="indigo-accent-2" />-->
+<!--                </span>-->
+<!--                <v-list-item-subtitle>-->
+<!--                    اگر فعال باشد آخرین فیلمی که صفحه آنرا مشاهده کردید در منوی پایین نمایش داده میشود-->
+<!--                </v-list-item-subtitle>-->
+<!--            </v-list-item>-->
             <v-divider/>
             <v-list-item class="py-0" @click="clearConfirmDlg = true">
                 <span>پاکسازی تاریخچه جستجو</span>
