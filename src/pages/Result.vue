@@ -5,6 +5,7 @@ import {VApp, VContainer, VRow, VCol, VCard, VBtn, VDialog} from "vuetify/compon
 import SearchBar from "@/components/SearchBar.vue";
 import MovieCard from "@/components/MovieCard.vue";
 import router from "@/router";
+import {da} from "vuetify/locale";
 
 const cancelDlg = ref(false)
 
@@ -36,9 +37,9 @@ if (localStorage.cacheSearch === undefined || JSON.parse(localStorage.cacheSearc
         .then(response => {            
             if (response.ok) return response.json()
         })
-        .then(movies => {              
+        .then(data => {
                 found.value = true;
-
+                movies = data
                 const date = new Date;
                 localStorage.setItem("cacheSearch", JSON.stringify( { text: query, result: movies } ))
                 localStorage.setItem("cacheSearchExpires", (date.getTime() + 30 * 60 * 1000).toString())
