@@ -155,7 +155,16 @@ import router from "@/router";
                     ]
                 }
                 else {
-                    seasons.value = data
+                    fetch(`https://freemovie.arjomand-dev.workers.dev/seasons?id=${movie.id}`)
+                        .then(response => {
+                            if (response.ok) return response.json()
+                        })
+                        .then(seasonsData => {
+                            seasons.value = seasonsData
+                        })
+                        .catch(error => {
+                            offline.value = true
+                        })
                 }
                 movieCountry.value = data.country.length > 0 ? data.country[0].title : "نامشخص"
                 movieDescription.value = data.description
