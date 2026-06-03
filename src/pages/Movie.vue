@@ -63,6 +63,7 @@ import router from "@/router";
         }
 
         for (let i of selectedCollections.value) {
+            movie.country = [{title: movieCountry}]
             collections.value[i].content.push(movie)
         }
 
