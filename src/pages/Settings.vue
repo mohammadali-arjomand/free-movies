@@ -67,8 +67,8 @@ function clearCache() {
     clearCacheSnk.value = true
 }
 
-function openFarsroid() {
-    location.assign('https://www.farsroid.com/vlc-for-android/#downloadbox')
+function openPlayStore() {
+    location.assign('https://play.google.com/store/apps/details?id=org.videolan.vlc')
 }
 </script>
 
@@ -108,12 +108,12 @@ function openFarsroid() {
                         ایمیل
                     </a>
                     <br>
-                    <a href="https://github.com/arjomand-dev" style="color: white">
+                    <a href="https://github.com/mohammadali-arjomand" style="color: white">
                         <v-icon color="indigo-accent-2">mdi-github</v-icon>
                         گیت هاب
                     </a>
                     <br>
-                    <a href="https://t.me/ArjomandDev" style="color: white">
+                    <a href="https://t.me/MohammadAli_Arjomand" style="color: white">
                         <v-icon color="indigo-accent-2">mdi-message-text-outline</v-icon>
                         تلگرام
                     </a>
@@ -211,7 +211,7 @@ function openFarsroid() {
                 </v-list-item-subtitle>
             </v-list-item>
             <v-divider/>
-            <v-list-item class="py-0" @click.stop="openFarsroid">
+            <v-list-item class="py-0" @click.stop="openPlayStore">
                 <span>دانلود پخش کننده VLC</span>
                 <v-list-item-subtitle>
                     برای مشاهده آنلاین فیلم ها پخش کننده VLC را نصب و از گزینه «مشاهده با VLC» در صفحه «دانلود» استفاده کنید
@@ -226,8 +226,8 @@ function openFarsroid() {
             </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <div class="text-center mt-3" onclick="alert('نسخه 5.2.3 آزمایشی')">
-            v5.2.4 Beta
+        <div class="text-center mt-3" onclick="alert('نسخه 5.2.5 آزمایشی')">
+            v5.2.5 Beta
         </div>
         <br><br><br>
     </v-app>
