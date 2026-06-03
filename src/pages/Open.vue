@@ -17,22 +17,12 @@ catch (e) {
 }
 
 try {
-    let movieInfo = JSON.parse(atob(data).replace("'", "’"))
-
-    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://winbedrives.com/api/search/${movieInfo.name}/4F5A9C3D9A86FA54EACEDDD635185`)}`)
+    fetch(`https://freemovie.arjomand-dev.workers.dev/movie?id=${data}`)
         .then(response => {
             if (response.ok) return response.json()
         })
         .then(data => {
-            let movies = JSON.parse(data.contents).posters
-            movies = movies.filter(value => value.year === movieInfo.year)
-            movies = movies.filter(value => value.id === movieInfo.id)
-            if (movies.length === 1) {
-                openMovie(movies[0])
-            }
-            else {
-                isLoading.value = false
-            }
+            openMovie(data)
         })
         .catch(error => {
             isLoading.value = false

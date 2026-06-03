@@ -114,16 +114,17 @@ import router from "@/router";
     }
 
     function shareMovie() {
-        const shareUrlData = {
-            name: movie.title.replace("’", "'"),
-            year: movie.year,
-            id: movie.id
-        }
+        // const shareUrlData = {
+        //     name: movie.title.replace("’", "'"),
+        //     year: movie.year,
+        //     id: movie.id
+        // }
 
         const shareData = {
             text : `فیلم «${movie.title}» رو از فری مووی ببین:`,
-            url : location.protocol +"//"+ location.hostname + "/s/" + btoa(JSON.stringify(shareUrlData))
+            url : location.protocol +"//"+ location.hostname + "/s/" + movie.id
         }
+        console.log(shareData)
         navigator.share(shareData)
     }
 
